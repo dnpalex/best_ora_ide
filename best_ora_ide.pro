@@ -24,8 +24,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    connectionlist.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    connectionlist.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    connectionlist.ui
+
+STATECHARTS += \
+    ora_ide.scxml
