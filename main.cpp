@@ -1,11 +1,12 @@
-#include "mainwindow.h"
+#include <source/Presenters/mainpresenter.h>
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    MainPresenter mainPres;
+
+    mainPres.ShowMainView();
 
     return a.exec();
 }
