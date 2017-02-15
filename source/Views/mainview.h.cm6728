@@ -2,8 +2,8 @@
 #define MAINVIEW_H
 
 #include <QMainWindow>
-#include <QDockWidget>
-#include "source/Views/viewabstract.h"
+#include "source/Views/mdisubview.h"
+#include "source/Views/enumviewtype.h"
 
 namespace Ui {
 class MainView;
@@ -17,11 +17,11 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
-    void AddToolBox(ViewAbstract* tb);
+    void ShowSubView(MdiSubView *subView);
 
 signals:
 
-    void sigShowSubView(ViewType);
+    void ShowSubView(SubViewType);
 
 private:
     Ui::MainView *ui;

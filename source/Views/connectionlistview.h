@@ -1,13 +1,14 @@
 #ifndef CONNECTIONLISTVIEW_H
 #define CONNECTIONLISTVIEW_H
 
-#include <QWidget>
+#include "source/Views/viewabstract.h"
+
 
 namespace Ui {
 class ConnectionListView;
 }
 
-class ConnectionListView : public QWidget
+class ConnectionListView : public ViewAbstract
 {
     Q_OBJECT
 

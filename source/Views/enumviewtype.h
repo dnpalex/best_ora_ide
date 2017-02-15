@@ -1,0 +1,6 @@
+#ifndef ENUMVIEWTYPE_H
+#define ENUMVIEWTYPE_H
+
+
+
+#endif // ENUMVIEWTYPE_H

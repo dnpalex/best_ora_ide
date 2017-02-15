@@ -1,21 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>ConnectionListView</class>
- <widget name="ConnectionListView" class="QWidget">
+ <widget class="QWidget" name="ConnectionListView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>243</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>Connection</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>PROD</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>S1P</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>M1P</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>UAT</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>S1U</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>S7U</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>SIT</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>R7T</string>
+       </property>
+      </item>
+     </item>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

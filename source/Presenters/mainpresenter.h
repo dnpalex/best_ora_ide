@@ -2,6 +2,10 @@
 #define MAINPRESENTER_H
 
 #include <QObject>
+#include <QScopedPointer>
+#include <QMap>
+#include "source/Views/mainview.h"
+#include "source/Views/connectionlistview.h"
 
 class MainPresenter : public QObject
 {
@@ -14,6 +18,15 @@ public:
 signals:
 
 public slots:
+
+    void ShowSubView(ViewType viewType);
+
+protected:
+
+    QScopedPointer<MainView> mainView;
+
+    ViewAbstract* getSubView(ViewType viewType);
+
 };
 
 #endif // MAINPRESENTER_H

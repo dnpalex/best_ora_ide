@@ -18,6 +18,8 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,6 +29,10 @@ class Ui_MainView
 public:
     QAction *actionConnection_list;
     QWidget *centralwidget;
+    QVBoxLayout *verticalLayout_2;
+    QTabWidget *tabWidget;
+    QWidget *tab;
+    QWidget *tab_2;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -45,6 +51,19 @@ public:
         actionConnection_list->setObjectName(QStringLiteral("actionConnection_list"));
         centralwidget = new QWidget(MainView);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        verticalLayout_2 = new QVBoxLayout(centralwidget);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        tabWidget = new QTabWidget(centralwidget);
+        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tabWidget->addTab(tab_2, QString());
+
+        verticalLayout_2->addWidget(tabWidget);
+
         MainView->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainView);
         menubar->setObjectName(QStringLiteral("menubar"));
@@ -83,6 +102,8 @@ public:
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "MainWindow", Q_NULLPTR));
         actionConnection_list->setText(QApplication::translate("MainView", "Connections", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainView", "Tab 1", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainView", "Tab 2", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("MainView", "File", Q_NULLPTR));
         menuEdit->setTitle(QApplication::translate("MainView", "Edit", Q_NULLPTR));
         menuView->setTitle(QApplication::translate("MainView", "View", Q_NULLPTR));

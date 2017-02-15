@@ -26,11 +26,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
     source/Presenters/mainpresenter.cpp \
     source/Views/mainview.cpp \
-    source/Views/connectionlistview.cpp
+    source/Views/connectionlistview.cpp \
+    source/Views/viewabstract.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
-    source/Views/connectionlistview.h
+    source/Views/enumviewtype.h \
+    source/Views/connectionlistview.h \
+    source/Views/viewabstract.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui

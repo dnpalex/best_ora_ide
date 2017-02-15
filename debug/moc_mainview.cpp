@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainView_t {
-    QByteArrayData data[3];
-    char stringdata0[26];
+    QByteArrayData data[4];
+    char stringdata0[34];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,11 +32,12 @@ struct qt_meta_stringdata_MainView_t {
 static const qt_meta_stringdata_MainView_t qt_meta_stringdata_MainView = {
     {
 QT_MOC_LITERAL(0, 0, 8), // "MainView"
-QT_MOC_LITERAL(1, 9, 15), // "ShowConnections"
-QT_MOC_LITERAL(2, 25, 0) // ""
+QT_MOC_LITERAL(1, 9, 14), // "sigShowSubView"
+QT_MOC_LITERAL(2, 24, 0), // ""
+QT_MOC_LITERAL(3, 25, 8) // "ViewType"
 
     },
-    "MainView\0ShowConnections\0"
+    "MainView\0sigShowSubView\0\0ViewType"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,10 +55,10 @@ static const uint qt_meta_data_MainView[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x06 /* Public */,
+       1,    1,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -68,21 +69,20 @@ void MainView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         MainView *_t = static_cast<MainView *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->ShowConnections(); break;
+        case 0: _t->sigShowSubView((*reinterpret_cast< ViewType(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (MainView::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainView::ShowConnections)) {
+            typedef void (MainView::*_t)(ViewType );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainView::sigShowSubView)) {
                 *result = 0;
                 return;
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject MainView::staticMetaObject = {
@@ -122,9 +122,10 @@ int MainView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void MainView::ShowConnections()
+void MainView::sigShowSubView(ViewType _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

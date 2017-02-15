@@ -6,7 +6,7 @@ MainView::MainView(QWidget *parent) :
     ui(new Ui::MainView)
 {
     ui->setupUi(this);
-    connect(ui->actionConnection_list,&QAction::triggered,[=]() { emit ShowConnections(); });
+    connect(ui->actionConnection_list,&QAction::triggered,[=]() { emit sigShowSubView(ViewType::ConnectionList); });
 }
 
 MainView::~MainView()
@@ -14,3 +14,15 @@ MainView::~MainView()
     delete ui;
 }
 
+void MainView::AddToolBox(ViewAbstract *tb)
+{
+    QDockWidget* dock = new QDockWidget(tb->windowTitle(),this);
+    if(tb->getViewType() != ViewType::OutPut) {
+        dock->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
+    }
+    else {
+        dock->setAllowedAreas(Qt::BottomDockWidgetArea);
+    }
+    dock->setWidget(tb);
+    addDockWidget(Qt::RightDockWidgetArea, dock);
+}
