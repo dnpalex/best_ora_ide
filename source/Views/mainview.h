@@ -23,6 +23,10 @@ signals:
 
     void sigShowSubView(ViewType);
 
+protected:
+
+    ViewAbstract* ifViewAvailable(ViewType vt);
+
 private:
     Ui::MainView *ui;
 };

@@ -22,7 +22,7 @@ void MainPresenter::ShowSubView(ViewType viewType)
         break;
     case ViewType::QueryEditor:
         break;
-    default:
+    case ViewType::Default:
         break;
     }
 }
@@ -32,13 +32,13 @@ ViewAbstract* MainPresenter::getSubView(ViewType viewType)
     ViewAbstract* subView = nullptr;
     switch (viewType) {
     case ViewType::ConnectionList:
-        subView = new ConnectionListView();
+        subView = new ConnectionListView(ViewType::ConnectionList);
         break;
     case ViewType::QueryEditor:
         break;
     case ViewType::OutPut:
         break;
-    default:
+    case ViewType::Default:
         break;
     }
     return subView;

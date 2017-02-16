@@ -8,6 +8,14 @@ ConnectionListView::ConnectionListView(QWidget *parent) :
     ui->setupUi(this);
 }
 
+ConnectionListView::ConnectionListView(ViewType vt, QString windowName, QWidget *parent) :
+    ViewAbstract(vt, windowName, parent),
+    ui(new Ui::ConnectionListView)
+{
+    ui->setupUi(this);
+    this->setWindowTitle(windowName);
+}
+
 ConnectionListView::~ConnectionListView()
 {
     delete ui;

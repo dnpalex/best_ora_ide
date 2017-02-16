@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/locale/en_US" lang="en_US">
+        <file>locale_en_us.ini</file>
+    </qresource>
+</RCC>

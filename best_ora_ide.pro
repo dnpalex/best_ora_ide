@@ -40,3 +40,4 @@ FORMS    += source/Views/mainview.ui \
 
 STATECHARTS += \
     ora_ide.scxml
+

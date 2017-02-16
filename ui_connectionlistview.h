@@ -13,7 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -24,28 +27,58 @@ class Ui_ConnectionListView
 {
 public:
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *pushButton;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_2;
+    QSpacerItem *horizontalSpacer;
     QTreeWidget *treeWidget;
 
     void setupUi(QWidget *ConnectionListView)
     {
         if (ConnectionListView->objectName().isEmpty())
             ConnectionListView->setObjectName(QStringLiteral("ConnectionListView"));
-        ConnectionListView->resize(243, 527);
+        ConnectionListView->resize(326, 571);
         verticalLayout = new QVBoxLayout(ConnectionListView);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(-1, -1, 0, -1);
+        pushButton = new QPushButton(ConnectionListView);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        horizontalLayout->addWidget(pushButton);
+
+        pushButton_3 = new QPushButton(ConnectionListView);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+
+        horizontalLayout->addWidget(pushButton_3);
+
+        pushButton_2 = new QPushButton(ConnectionListView);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        horizontalLayout->addWidget(pushButton_2);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+        horizontalLayout->setStretch(0, 1);
+        horizontalLayout->setStretch(1, 1);
+        horizontalLayout->setStretch(2, 1);
+        horizontalLayout->setStretch(3, 10);
+
+        verticalLayout->addLayout(horizontalLayout);
+
         treeWidget = new QTreeWidget(ConnectionListView);
-        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem(treeWidget);
-        new QTreeWidgetItem(__qtreewidgetitem);
-        new QTreeWidgetItem(__qtreewidgetitem);
-        QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem(treeWidget);
-        new QTreeWidgetItem(__qtreewidgetitem1);
-        new QTreeWidgetItem(__qtreewidgetitem1);
-        QTreeWidgetItem *__qtreewidgetitem2 = new QTreeWidgetItem(treeWidget);
-        new QTreeWidgetItem(__qtreewidgetitem2);
+        treeWidget->headerItem()->setText(0, QString());
         treeWidget->setObjectName(QStringLiteral("treeWidget"));
 
         verticalLayout->addWidget(treeWidget);
 
+        QWidget::setTabOrder(pushButton_2, pushButton);
+        QWidget::setTabOrder(pushButton, treeWidget);
+        QWidget::setTabOrder(treeWidget, pushButton_3);
 
         retranslateUi(ConnectionListView);
 
@@ -55,29 +88,9 @@ public:
     void retranslateUi(QWidget *ConnectionListView)
     {
         ConnectionListView->setWindowTitle(QApplication::translate("ConnectionListView", "Form", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
-        ___qtreewidgetitem->setText(0, QApplication::translate("ConnectionListView", "Connection", Q_NULLPTR));
-
-        const bool __sortingEnabled = treeWidget->isSortingEnabled();
-        treeWidget->setSortingEnabled(false);
-        QTreeWidgetItem *___qtreewidgetitem1 = treeWidget->topLevelItem(0);
-        ___qtreewidgetitem1->setText(0, QApplication::translate("ConnectionListView", "PROD", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem2 = ___qtreewidgetitem1->child(0);
-        ___qtreewidgetitem2->setText(0, QApplication::translate("ConnectionListView", "S1P", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem3 = ___qtreewidgetitem1->child(1);
-        ___qtreewidgetitem3->setText(0, QApplication::translate("ConnectionListView", "M1P", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem4 = treeWidget->topLevelItem(1);
-        ___qtreewidgetitem4->setText(0, QApplication::translate("ConnectionListView", "UAT", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem5 = ___qtreewidgetitem4->child(0);
-        ___qtreewidgetitem5->setText(0, QApplication::translate("ConnectionListView", "S1U", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem6 = ___qtreewidgetitem4->child(1);
-        ___qtreewidgetitem6->setText(0, QApplication::translate("ConnectionListView", "S7U", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem7 = treeWidget->topLevelItem(2);
-        ___qtreewidgetitem7->setText(0, QApplication::translate("ConnectionListView", "SIT", Q_NULLPTR));
-        QTreeWidgetItem *___qtreewidgetitem8 = ___qtreewidgetitem7->child(0);
-        ___qtreewidgetitem8->setText(0, QApplication::translate("ConnectionListView", "R7T", Q_NULLPTR));
-        treeWidget->setSortingEnabled(__sortingEnabled);
-
+        pushButton->setText(QApplication::translate("ConnectionListView", ".", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("ConnectionListView", ".", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("ConnectionListView", ".", Q_NULLPTR));
     } // retranslateUi
 
 };

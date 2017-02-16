@@ -10,7 +10,7 @@ class ViewAbstract : public QWidget
 {
 public:
     ViewAbstract(QWidget* parent = 0);
-    ViewAbstract(ViewType vt, QWidget* parent = 0);
+    ViewAbstract(ViewType vt, QString windowName = tr("ToolBox"), QWidget* parent = 0);
     virtual ~ViewAbstract();
 
     ViewType getViewType();
