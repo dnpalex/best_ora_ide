@@ -13,8 +13,7 @@ class ConnectionListView : public ViewAbstract
     Q_OBJECT
 
 public:
-    explicit ConnectionListView(QWidget *parent = 0);
-    ConnectionListView(ViewType vt, QString windowName = tr("Connections"), QWidget* parent = 0);
+    explicit ConnectionListView(ViewType vt, QWidget* parent = 0);
     ~ConnectionListView();
 
 private:

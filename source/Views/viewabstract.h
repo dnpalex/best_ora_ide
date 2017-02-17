@@ -1,23 +1,22 @@
 #ifndef TOOLBOXABSTRACT_H
 #define TOOLBOXABSTRACT_H
 
-#include <QSettings>
 #include <QWidget>
+#include "source/Misc/settingsuser.h"
 
 enum ViewType {Default, ConnectionList,QueryEditor,OutPut};
 
-class ViewAbstract : public QWidget
+class ViewAbstract : public QWidget, public SettingsUser
 {
 public:
     ViewAbstract(QWidget* parent = 0);
-    ViewAbstract(ViewType vt, QString windowName = tr("ToolBox"), QWidget* parent = 0);
     virtual ~ViewAbstract();
 
     ViewType getViewType();
+    void setViewType(ViewType vt);
 
 protected:
 
-    QSettings sets;
     ViewType viewType;
 };
 

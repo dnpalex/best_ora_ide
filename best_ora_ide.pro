@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = best_ora_ide
 TEMPLATE = app
+INCLUDEPATH += .
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -27,13 +28,15 @@ SOURCES += main.cpp\
     source/Presenters/mainpresenter.cpp \
     source/Views/mainview.cpp \
     source/Views/connectionlistview.cpp \
-    source/Views/viewabstract.cpp
+    source/Views/viewabstract.cpp \
+    source/Misc/settingsuser.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
     source/Views/enumviewtype.h \
     source/Views/connectionlistview.h \
-    source/Views/viewabstract.h
+    source/Views/viewabstract.h \
+    source/Misc/settingsuser.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui

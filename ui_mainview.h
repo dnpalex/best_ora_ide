@@ -31,6 +31,8 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_2;
     QTabWidget *tabWidget;
+    QWidget *tab;
+    QWidget *tab_2;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -44,22 +46,32 @@ public:
     {
         if (MainView->objectName().isEmpty())
             MainView->setObjectName(QStringLiteral("MainView"));
-        MainView->resize(800, 600);
+        MainView->resize(1012, 676);
         actionConnection_list = new QAction(MainView);
         actionConnection_list->setObjectName(QStringLiteral("actionConnection_list"));
         centralwidget = new QWidget(MainView);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout_2 = new QVBoxLayout(centralwidget);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(2, 2, 2, 2);
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setTabsClosable(true);
+        tabWidget->setMovable(true);
+        tabWidget->setTabBarAutoHide(false);
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tabWidget->addTab(tab_2, QString());
 
         verticalLayout_2->addWidget(tabWidget);
 
         MainView->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainView);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 1012, 21));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menubar);
@@ -87,7 +99,7 @@ public:
 
         retranslateUi(MainView);
 
-        tabWidget->setCurrentIndex(-1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainView);
@@ -97,6 +109,8 @@ public:
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "MainWindow", Q_NULLPTR));
         actionConnection_list->setText(QApplication::translate("MainView", "Connections", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainView", "Page", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainView", "Page", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("MainView", "File", Q_NULLPTR));
         menuEdit->setTitle(QApplication::translate("MainView", "Edit", Q_NULLPTR));
         menuView->setTitle(QApplication::translate("MainView", "View", Q_NULLPTR));

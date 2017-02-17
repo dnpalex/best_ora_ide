@@ -1,19 +1,20 @@
 #include "connectionlistview.h"
 #include "ui_connectionlistview.h"
 
-ConnectionListView::ConnectionListView(QWidget *parent) :
+ConnectionListView::ConnectionListView(ViewType vt, QWidget *parent) :
     ViewAbstract(parent),
     ui(new Ui::ConnectionListView)
 {
     ui->setupUi(this);
-}
+    setViewType(vt);
 
-ConnectionListView::ConnectionListView(ViewType vt, QString windowName, QWidget *parent) :
-    ViewAbstract(vt, windowName, parent),
-    ui(new Ui::ConnectionListView)
-{
-    ui->setupUi(this);
-    this->setWindowTitle(windowName);
+    //Read text settings group
+    BeginTextGroup(tr("ConnectionList"));
+
+    setWindowTitle(textValue("windowTitle").toString());
+
+    EndTextGroup();
+    //End text settings group
 }
 
 ConnectionListView::~ConnectionListView()

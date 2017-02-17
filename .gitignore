@@ -83,6 +83,5 @@ $RECYCLE.BIN/
 *.Release
 *.h.*
 *.rcc
-.debug
-.release
-debug/qrc_res.cpp
+debug
+release
