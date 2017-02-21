@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/locale/neutral">
+    <qresource prefix="/">
         <file>database_add.png</file>
         <file>database_alert.png</file>
         <file>database_find.png</file>

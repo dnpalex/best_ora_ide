@@ -13,8 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QTreeView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -24,7 +25,8 @@ class Ui_ConnectionListView
 {
 public:
     QVBoxLayout *verticalLayout;
-    QTreeWidget *treeWidget;
+    QHBoxLayout *layToolBar;
+    QTreeView *treeView;
 
     void setupUi(QWidget *ConnectionListView)
     {
@@ -34,14 +36,17 @@ public:
         verticalLayout = new QVBoxLayout(ConnectionListView);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 2);
-        treeWidget = new QTreeWidget(ConnectionListView);
-        treeWidget->headerItem()->setText(0, QString());
-        treeWidget->setObjectName(QStringLiteral("treeWidget"));
-        treeWidget->setAnimated(true);
-        treeWidget->setHeaderHidden(true);
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        layToolBar = new QHBoxLayout();
+        layToolBar->setSpacing(0);
+        layToolBar->setObjectName(QStringLiteral("layToolBar"));
 
-        verticalLayout->addWidget(treeWidget);
+        verticalLayout->addLayout(layToolBar);
+
+        treeView = new QTreeView(ConnectionListView);
+        treeView->setObjectName(QStringLiteral("treeView"));
+
+        verticalLayout->addWidget(treeView);
 
 
         retranslateUi(ConnectionListView);

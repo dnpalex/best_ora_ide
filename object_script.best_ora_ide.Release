@@ -1,13 +1,11 @@
 INPUT(
 ./release\main.o
-./release\mainwindow.o
-./release\connectionlist.o
-./release\connectionlist.o
-./release\mainwindow.o
-./release\mainpresenter.o
 ./release\mainpresenter.o
 ./release\mainview.o
 ./release\connectionlistview.o
+./release\viewabstract.o
+./release\settingsuser.o
+./release\treemodel.o
 ./release\moc_mainpresenter.o
 ./release\moc_mainview.o
 ./release\moc_connectionlistview.o

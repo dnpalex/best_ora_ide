@@ -15,10 +15,33 @@ ConnectionListView::ConnectionListView(ViewType vt, QWidget *parent) :
 
     EndTextGroup();
     //End text settings group
+
+    //Setup toolbar
+    toolBar.reset(new QToolBar(this));
+    QAction *act = new QAction(QIcon(tr(":/database_add.png")),"",toolBar.data());
+    connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
+    toolBar->addAction(act);
+
+    act = new QAction(QIcon(tr(":/database_remove.png")),"",toolBar.data());
+    connect(act, &QAction::triggered, this, &ConnectionListView::RemoveConnection);
+    toolBar->addAction(act);
+
+    ui->layToolBar->addWidget(toolBar.data());
+    //end toolbar
 }
 
 ConnectionListView::~ConnectionListView()
 {
     delete ui;
+}
+
+void ConnectionListView::AddConnection()
+{
+
+}
+
+void ConnectionListView::RemoveConnection()
+{
+
 }
 

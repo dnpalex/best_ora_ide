@@ -27,28 +27,20 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="animated">
-      <bool>true</bool>
+    <layout class="QHBoxLayout" name="layToolBar">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <property name="headerHidden">
-      <bool>true</bool>
-     </property>
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-    </widget>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTreeView" name="treeView"/>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>treeWidget</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
