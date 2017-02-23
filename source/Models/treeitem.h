@@ -29,4 +29,4 @@ private:
     TreeItem *parentItem;
 };
 
-#endif // TREEITEM_H
+#endif // TREEMODEL_H

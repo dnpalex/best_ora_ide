@@ -2,16 +2,18 @@
 #define TREEMODEL_H
 
 #include <QAbstractItemModel>
-#include "source/Misc/settingsuser.h"
-#include "treeitem.h"
+#include <QModelIndex>
+#include <QVariant>
 
+class TreeItem;
 
-class TreeModel : public QAbstractItemModel, public SettingsUser
+class TreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    TreeModel(const QStringList &headers, const QString &data, QObject *parent = 0);
+    TreeModel(const QStringList &headers, const QString &data,
+              QObject *parent = 0);
     ~TreeModel();
 
     QVariant data(const QModelIndex &index, int role) const override;
@@ -46,6 +48,5 @@ private:
 
     TreeItem *rootItem;
 };
-
 
 #endif // TREEMODEL_H
