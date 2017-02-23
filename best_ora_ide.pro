@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     source/Views/connectionlistview.cpp \
     source/Views/viewabstract.cpp \
     source/Misc/settingsuser.cpp \
-    source/Models/treemodel.cpp
+    source/Models/treemodel.cpp \
+    source/Models/treeitem.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -38,7 +39,8 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/connectionlistview.h \
     source/Views/viewabstract.h \
     source/Misc/settingsuser.h \
-    source/Models/treemodel.h
+    source/Models/treemodel.h \
+    source/Models/treeitem.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui
