@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     QResource::registerResource("res/ico.rcc");
     //qDebug() << "reg locals:" <<
     QResource::registerResource("res/locals.rcc");
+    QResource::registerResource("res/config.rcc");
 
     //QSettings s(":/general",QSettings::IniFormat);
 

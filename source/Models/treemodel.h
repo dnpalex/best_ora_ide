@@ -4,16 +4,21 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QFile>
+
+#include "source/Misc/logableobject.h"
 
 class TreeItem;
 
-class TreeModel : public QAbstractItemModel
+enum FileType {XML, JSON};
+
+class TreeModel : public QAbstractItemModel, public LogableObject
 {
     Q_OBJECT
 
 public:
-    TreeModel(const QStringList &headers, const QString &data,
-              QObject *parent = 0);
+    TreeModel(const QStringList &headers, const QString &data, QObject *parent = 0);
+    TreeModel(const QString &file, FileType ftype, QObject *parent = 0);
     ~TreeModel();
 
     QVariant data(const QModelIndex &index, int role) const override;
@@ -41,6 +46,10 @@ public:
                     const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex()) override;
+
+signals:
+
+    void LogError(QString errorString) override;
 
 private:
     void setupModelData(const QStringList &lines, TreeItem *parent);

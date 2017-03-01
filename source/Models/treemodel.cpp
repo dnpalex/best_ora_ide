@@ -14,6 +14,22 @@ TreeModel::TreeModel(const QStringList &headers, const QString &data, QObject *p
     setupModelData(data.split(QString("\n")), rootItem);
 }
 
+TreeModel::TreeModel(const QString &file, FileType ftype, QObject *parent)
+    : QAbstractItemModel(parent)
+{
+    QFile* fl = new QFile(file);
+    if (!fl->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        emit LogError(tr("Невозможно открыть XML-конфиг"));
+    }
+    switch(ftype){
+    case FileType::XML:
+        break;
+    case FileType::JSON:
+        break;
+    }
+}
+
 TreeModel::~TreeModel()
 {
     delete rootItem;
