@@ -3,8 +3,12 @@
 
 #include <QObject>
 #include <QFile>
+#include <QDate>
+#include <QTextStream>
 
-class Logger : public QObject
+#include "source/Misc/settingsuser.h"
+
+class Logger : public QObject, public SettingsUser
 {
     Q_OBJECT
 public:
@@ -13,6 +17,13 @@ public:
 signals:
 
 public slots:
+
+    void LogMessage(const QString text);
+
+private:
+
+    QFile errorLogFile;
+
 };
 
 #endif // LOGGER_H

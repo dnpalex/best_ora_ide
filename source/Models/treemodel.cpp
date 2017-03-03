@@ -11,7 +11,7 @@ TreeModel::TreeModel(const QStringList &headers, const QString &data, QObject *p
         rootData << header;
 
     rootItem = new TreeItem(rootData);
-    setupModelData(data.split(QString("\n")), rootItem);
+    //setupModelData(data.split(QString("\n")), rootItem);
 }
 
 TreeModel::TreeModel(const QString &file, FileType ftype, QObject *parent)
@@ -20,10 +20,24 @@ TreeModel::TreeModel(const QString &file, FileType ftype, QObject *parent)
     QFile* fl = new QFile(file);
     if (!fl->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        emit LogError(tr("Невозможно открыть XML-конфиг"));
+        emit LogError(tr(fl->fileName().append(": ").append(fl->errorString())));
     }
     switch(ftype){
     case FileType::XML:
+        QXmlStreamReader xml(fl);
+        QXmlStreamReader::TokenType token;
+        while (!xml.atEnd() && !xml.hasError())
+        {
+            token = xml.readNext();
+            emit LogError(xml.tokenString().append(": ").append(xml.name()));
+            if (token == QXmlStreamReader::StartDocument || xml.name() == "Connections")
+                continue;
+            if (token == QXmlStreamReader::StartElement)
+            {
+                if (xml.name() == "Connection")
+                    emit LogError(tr("add connection"))//
+            }
+        }
         break;
     case FileType::JSON:
         break;

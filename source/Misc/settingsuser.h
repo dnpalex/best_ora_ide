@@ -13,11 +13,18 @@ public:
 protected:
 
     QVariant textValue(QString key);
+    QVariant configValue(QString key);
+
     void BeginTextGroup(QString gn);
     void EndTextGroup();
+
+    void BeginConfigGroup(QString gn);
+    void EndConfigGroup();
+
 private:
 
     QSettings textSettings;
+    QSettings config;
 };
 
 #endif // SETTINGSUSERTEXT_H
