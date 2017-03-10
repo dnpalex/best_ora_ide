@@ -85,3 +85,6 @@ $RECYCLE.BIN/
 *.rcc
 debug
 release
+
+#Log files
+Log
