@@ -6,6 +6,9 @@
 #include <QMap>
 #include "source/Views/mainview.h"
 #include "source/Views/connectionlistview.h"
+#include "source/Models/treemodel.h"
+#include "source/Misc/logger.h"
+
 
 class MainPresenter : public QObject
 {
@@ -26,6 +29,8 @@ protected:
     QScopedPointer<MainView> mainView;
 
     ViewAbstract* getSubView(ViewType viewType);
+
+    QAbstractItemModel* getViewModel(ViewType viewType, ViewAbstract* view = nullptr);
 
 };
 

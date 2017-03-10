@@ -7,6 +7,7 @@
 #include <QFile>
 
 #include "source/Misc/logableobject.h"
+#include "source/Misc/logger.h"
 
 class TreeItem;
 
@@ -17,8 +18,9 @@ class TreeModel : public QAbstractItemModel, public LogableObject
     Q_OBJECT
 
 public:
-    TreeModel(const QStringList &headers, const QString &data, QObject *parent = 0);
-    TreeModel(const QString &file, FileType ftype, QObject *parent = 0);
+    //TreeModel(const QStringList &headers, const QString &data, QObject *parent = 0);
+    TreeModel(QObject *parent = 0);
+    TreeModel(Logger* logger, const QString &file, FileType ftype, QObject *parent = 0);
     ~TreeModel();
 
     QVariant data(const QModelIndex &index, int role) const override;
@@ -46,6 +48,8 @@ public:
                     const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex()) override;
+
+    bool readFromFile(const QString &file, FileType ftype);
 
 signals:
 

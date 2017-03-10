@@ -1,5 +1,8 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Connections>
-	<Connection name="D1P"/>
-	<Connection name="S2P"/>
-<Connections/>
+<folder name="Prod">
+	<connection name="PROD1"/>
+	<connection name="PROD2"/>
+</folder>
+<folder name="Test">
+	<connection name="TEST1"/>
+</folder>

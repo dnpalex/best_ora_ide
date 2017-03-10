@@ -3,7 +3,7 @@
 #include "treeitem.h"
 #include "treemodel.h"
 
-TreeModel::TreeModel(const QStringList &headers, const QString &data, QObject *parent)
+/*TreeModel::TreeModel(const QStringList &headers, const QString &data, QObject *parent)
     : QAbstractItemModel(parent)
 {
     QVector<QVariant> rootData;
@@ -12,30 +12,21 @@ TreeModel::TreeModel(const QStringList &headers, const QString &data, QObject *p
 
     rootItem = new TreeItem(rootData);
     //setupModelData(data.split(QString("\n")), rootItem);
-}
+}*/
 
-TreeModel::TreeModel(const QString &file, FileType ftype, QObject *parent)
+TreeModel::TreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
-    QFile* fl = new QFile(file);
-    if (!fl->open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        emit LogError(fl->fileName().append(": ").append(fl->errorString()));
-    }
-    switch(ftype){
-    case FileType::XML:{
-        QXmlStreamReader xml(fl);
-        QXmlStreamReader::TokenType token;
-        while (!xml.atEnd() && !xml.hasError())
-        {
-            token = xml.readNext();
-            emit LogError(xml.tokenString().append(": ").append(xml.name()));
-        }
+    rootItem = new TreeItem(QVector<QVariant>());
+}
 
-        break;}
-    case FileType::JSON:
-        break;
-    }
+TreeModel::TreeModel(Logger *logger, const QString &file, FileType ftype, QObject *parent)
+    : TreeModel(parent)
+{
+    logger->setParent(this);
+    connect(this,&TreeModel::LogError, logger, &Logger::LogMessage);
+
+    readFromFile(file, ftype);
 }
 
 TreeModel::~TreeModel()
@@ -163,6 +154,33 @@ bool TreeModel::removeRows(int position, int rows, const QModelIndex &parent)
     endRemoveRows();
 
     return success;
+}
+
+bool TreeModel::readFromFile(const QString &file, FileType ftype)
+{
+    QFile* fl = new QFile(file);
+    if (!fl->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        emit LogError(fl->fileName().append(": ").append(fl->errorString()));
+    }
+    switch(ftype){
+    case FileType::XML:{
+        QXmlStreamReader xml(fl);
+        QXmlStreamReader::TokenType token;
+        while (!xml.atEnd() && !xml.hasError())
+        {
+            token = xml.readNext();
+            emit LogError(xml.tokenString().append(": ").append(xml.name()));
+        }
+
+        break;}
+    case FileType::JSON:
+        break;
+    default:
+        emit LogError(tr("Unsupported file type: "+ftype));
+        return false;
+    }
+    return true;
 }
 
 int TreeModel::rowCount(const QModelIndex &parent) const

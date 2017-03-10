@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDate>
 #include <QTextStream>
+#include <QDir>
 
 #include "source/Misc/settingsuser.h"
 
