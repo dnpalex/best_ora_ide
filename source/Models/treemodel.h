@@ -5,6 +5,7 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QFile>
+#include <QXmlStreamReader>
 
 #include "source/Misc/logableobject.h"
 #include "source/Misc/logger.h"
@@ -54,6 +55,11 @@ public:
 signals:
 
     void LogError(QString errorString) override;
+
+protected:
+
+    void parseXml(QXmlStreamReader* xml, TreeItem* parent);
+    virtual TreeItem* getTreeItem(TreeItem* parent, QMap<QString,QString> data);
 
 private:
     void setupModelData(const QStringList &lines, TreeItem *parent);

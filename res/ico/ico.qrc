@@ -1,10 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>database_add.png</file>
-        <file>database_alert.png</file>
-        <file>database_find.png</file>
-        <file>database_refresh.png</file>
-        <file>database_remove.png</file>
-        <file>database_wait.png</file>
+        <file alias="db_add">database_add.png</file>
+        <file alias="db_alert">database_alert.png</file>
+        <file alias="db_find">database_find.png</file>
+        <file alias="db_ref">database_refresh.png</file>
+        <file alias="db_rem">database_remove.png</file>
+        <file alias="db_wait">database_wait.png</file>
+        <file alias="db">database_64.png</file>
+        <file alias="db_folder">database_server.png</file>
+	<file alias="connections">connections_64.png</file>
     </qresource>
 </RCC>

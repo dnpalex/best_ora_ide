@@ -1,8 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<folder name="Prod">
-	<connection name="PROD1"/>
-	<connection name="PROD2"/>
-</folder>
-<folder name="Test">
-	<connection name="TEST1"/>
-</folder>
+<tree>
+	<folder name="Prod"  ico=":/db_folder">
+		<connection name="PROD1" ico=":/db"/>
+		<connection name="PROD2" ico=":/db"/>
+	</folder>
+	<folder name="Test" ico=":/db_folder">
+		<connection name="TEST1" ico=":/db"/>
+	</folder>
+</tree>

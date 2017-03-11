@@ -9,15 +9,17 @@ class TreeItem
 {
 public:
     explicit TreeItem(const QVector<QVariant> &data, TreeItem *parent = 0);
+    TreeItem(const QString& name, TreeItem *parent = 0);
     ~TreeItem();
 
-    TreeItem *child(int number);
+    TreeItem* child(int number);
     int childCount() const;
     int columnCount() const;
     QVariant data(int column) const;
     bool insertChildren(int position, int count, int columns);
+    bool insertChildren(TreeItem* child, int position);
     bool insertColumns(int position, int columns);
-    TreeItem *parent();
+    TreeItem* parent();
     bool removeChildren(int position, int count);
     bool removeColumns(int position, int columns);
     int childNumber() const;
@@ -26,7 +28,7 @@ public:
 private:
     QList<TreeItem*> childItems;
     QVector<QVariant> itemData;
-    TreeItem *parentItem;
+    TreeItem* parentItem;
 };
 
 #endif // TREEMODEL_H

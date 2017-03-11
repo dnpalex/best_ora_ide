@@ -1,5 +1,3 @@
-#include <QtWidgets>
-
 #include "treeitem.h"
 #include "treemodel.h"
 
@@ -17,7 +15,7 @@
 TreeModel::TreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
-    rootItem = new TreeItem(QVector<QVariant>());
+    rootItem = new TreeItem("Name");
 }
 
 TreeModel::TreeModel(Logger *logger, const QString &file, FileType ftype, QObject *parent)
@@ -60,7 +58,7 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
 }
 
-TreeItem *TreeModel::getItem(const QModelIndex &index) const
+TreeItem* TreeModel::getItem(const QModelIndex &index) const
 {
     if (index.isValid()) {
         TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
@@ -84,9 +82,9 @@ QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent) con
     if (parent.isValid() && parent.column() != 0)
         return QModelIndex();
 
-    TreeItem *parentItem = getItem(parent);
+    TreeItem* parentItem = getItem(parent);
 
-    TreeItem *childItem = parentItem->child(row);
+    TreeItem* childItem = parentItem->child(row);
     if (childItem)
         return createIndex(row, column, childItem);
     else
@@ -162,18 +160,14 @@ bool TreeModel::readFromFile(const QString &file, FileType ftype)
     if (!fl->open(QIODevice::ReadOnly | QIODevice::Text))
     {
         emit LogError(fl->fileName().append(": ").append(fl->errorString()));
+        return false;
     }
     switch(ftype){
     case FileType::XML:{
         QXmlStreamReader xml(fl);
-        QXmlStreamReader::TokenType token;
-        while (!xml.atEnd() && !xml.hasError())
-        {
-            token = xml.readNext();
-            emit LogError(xml.tokenString().append(": ").append(xml.name()));
-        }
-
-        break;}
+        parseXml(&xml,rootItem);
+        break;
+    }
     case FileType::JSON:
         break;
     default:
@@ -181,6 +175,44 @@ bool TreeModel::readFromFile(const QString &file, FileType ftype)
         return false;
     }
     return true;
+}
+
+void TreeModel::parseXml(QXmlStreamReader* xml, TreeItem* parent)
+{
+    if(!xml->atEnd() && !xml->hasError())
+    {
+        QXmlStreamReader::TokenType token = xml->readNext();
+        if(xml->name()=="tree") parseXml(xml,parent);
+        switch(token){
+        case QXmlStreamReader::StartElement:{
+            QMap<QString,QString> data;
+            foreach (QXmlStreamAttribute attr, xml->attributes()) {
+                data[attr.name().toString()] = attr.value().toString();
+            }
+            TreeItem* ti = getTreeItem(parent, data);
+            parent->insertChildren(ti,parent->childCount());
+            parseXml(xml,ti);
+            break;
+        }
+        case QXmlStreamReader::EndElement:
+            parseXml(xml,parent->parent());
+            break;
+        case QXmlStreamReader::Invalid:
+            emit LogError(xml->errorString());
+            throw xml->error();
+            break;
+        case QXmlStreamReader::EndDocument:
+            return;
+        default:
+            parseXml(xml,parent);
+            break;
+        }
+    }
+}
+
+TreeItem* TreeModel::getTreeItem(TreeItem* parent, QMap<QString, QString> data)
+{
+    return new TreeItem(data["name"],parent);
 }
 
 int TreeModel::rowCount(const QModelIndex &parent) const

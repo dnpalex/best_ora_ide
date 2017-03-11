@@ -45,6 +45,8 @@ public:
 
         treeView = new QTreeView(ConnectionListView);
         treeView->setObjectName(QStringLiteral("treeView"));
+        treeView->setAnimated(true);
+        treeView->setHeaderHidden(true);
 
         verticalLayout->addWidget(treeView);
 

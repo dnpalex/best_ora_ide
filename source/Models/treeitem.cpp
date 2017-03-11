@@ -8,6 +8,12 @@ TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
     itemData = data;
 }
 
+TreeItem::TreeItem(const QString &name, TreeItem *parent)
+{
+    parentItem = parent;
+    itemData.push_front(name);
+}
+
 TreeItem::~TreeItem()
 {
     qDeleteAll(childItems);
@@ -55,6 +61,11 @@ bool TreeItem::insertChildren(int position, int count, int columns)
     return true;
 }
 
+bool TreeItem::insertChildren(TreeItem *child, int position)
+{
+    childItems.insert(position,child);
+}
+
 bool TreeItem::insertColumns(int position, int columns)
 {
     if (position < 0 || position > itemData.size())
@@ -69,7 +80,7 @@ bool TreeItem::insertColumns(int position, int columns)
     return true;
 }
 
-TreeItem *TreeItem::parent()
+TreeItem* TreeItem::parent()
 {
     return parentItem;
 }
