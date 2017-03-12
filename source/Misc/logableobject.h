@@ -9,7 +9,7 @@ public:
     explicit LogableObject();
     virtual ~LogableObject();
 
-    virtual void LogError(QString errorString) = 0;
+    virtual void LogError(const QString& errorString) = 0;
 };
 
 #endif // LOGABLEOBJECT_H

@@ -1,7 +1,7 @@
 #include "connectionlistview.h"
 #include "ui_connectionlistview.h"
 
-ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel* model, QWidget *parent) :
+ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, QWidget *parent) :
     ViewAbstract(parent),
     ui(new Ui::ConnectionListView)
 {
@@ -37,7 +37,7 @@ ConnectionListView::~ConnectionListView()
     delete ui;
 }
 
-void ConnectionListView::setConnectionsModel(QAbstractItemModel *model)
+void ConnectionListView::setConnectionsModel(QAbstractItemModel* model)
 {
     ui->treeView->setModel(model);
 }

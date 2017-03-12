@@ -4,6 +4,8 @@ MainPresenter::MainPresenter(QObject *parent) : QObject(parent)
 {
     mainView.reset(new MainView());
     connect(mainView.data(),&MainView::sigShowSubView,this,&MainPresenter::ShowSubView);
+
+    ioadapter.reset(new IOAdapter(this));
 }
 
 void MainPresenter::ShowMainView()
@@ -27,7 +29,7 @@ void MainPresenter::ShowSubView(ViewType viewType)
     }
 }
 
-ViewAbstract* MainPresenter::getSubView(ViewType viewType)
+ViewAbstract* MainPresenter::getSubView(const ViewType& viewType)
 {
     ViewAbstract* subView = nullptr;
     switch (viewType) {
@@ -44,19 +46,18 @@ ViewAbstract* MainPresenter::getSubView(ViewType viewType)
     return subView;
 }
 
-QAbstractItemModel *MainPresenter::getViewModel(ViewType viewType, ViewAbstract* view)
+QAbstractItemModel* MainPresenter::getViewModel(const ViewType& viewType)
 {
-    QAbstractItemModel* model = nullptr;
+    QAbstractItemModel* model = Q_NULLPTR;
     switch (viewType) {
     case ViewType::ConnectionList:
-        model = new TreeModel(new Logger(), tr(":/connections.xml"), FileType::XML,view);
-        break;
+        model = ioadapter.data()->readFile(tr(":/connections.xml"), IOAdapter::XML);
     case ViewType::QueryEditor:
         break;
     case ViewType::OutPut:
         break;
     case ViewType::Default:
         break;
-    }
+    };
     return model;
 }

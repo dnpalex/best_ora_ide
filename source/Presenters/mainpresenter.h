@@ -6,7 +6,7 @@
 #include <QMap>
 #include "source/Views/mainview.h"
 #include "source/Views/connectionlistview.h"
-#include "source/Models/treemodel.h"
+#include "source/Models/ioadapter.h"
 #include "source/Misc/logger.h"
 
 
@@ -27,10 +27,11 @@ public slots:
 protected:
 
     QScopedPointer<MainView> mainView;
+    QScopedPointer<IOAdapter> ioadapter;
 
-    ViewAbstract* getSubView(ViewType viewType);
+    ViewAbstract* getSubView(const ViewType& viewType);
 
-    QAbstractItemModel* getViewModel(ViewType viewType, ViewAbstract* view = nullptr);
+    QAbstractItemModel *getViewModel(const ViewType& viewType);
 
 };
 

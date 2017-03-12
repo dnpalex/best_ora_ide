@@ -16,7 +16,7 @@ class ConnectionListView : public ViewAbstract
     Q_OBJECT
 
 public:
-    explicit ConnectionListView(ViewType vt, QAbstractItemModel* model = 0, QWidget* parent = 0);
+    explicit ConnectionListView(ViewType vt, QAbstractItemModel* model = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
     ~ConnectionListView();
 
     void setConnectionsModel(QAbstractItemModel* model);

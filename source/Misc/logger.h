@@ -19,7 +19,7 @@ signals:
 
 public slots:
 
-    void LogMessage(const QString text);
+    void LogMessage(const QString& text);
 
 private:
 

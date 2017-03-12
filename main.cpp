@@ -6,7 +6,6 @@
 #include <QFile>
 
 #include <source/Presenters/mainpresenter.h>
-#include <source/Models/treemodel.h>
 #include <source/Misc/logger.h>
 
 int main(int argc, char *argv[])

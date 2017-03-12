@@ -14,7 +14,7 @@ Logger::Logger(QObject *parent) : QObject(parent)
     EndConfigGroup();
 }
 
-void Logger::LogMessage(const QString text)
+void Logger::LogMessage(const QString& text)
 {
     if(!errorLogFile.isOpen() && !errorLogFile.open(QIODevice::ReadWrite | QIODevice::Text)){
         throw errorLogFile.errorString();

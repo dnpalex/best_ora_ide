@@ -30,10 +30,9 @@ SOURCES += main.cpp\
     source/Views/connectionlistview.cpp \
     source/Views/viewabstract.cpp \
     source/Misc/settingsuser.cpp \
-    source/Models/treemodel.cpp \
-    source/Models/treeitem.cpp \
     source/Misc/logger.cpp \
-    source/Misc/logableobject.cpp
+    source/Misc/logableobject.cpp \
+    source/Models/ioadapter.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -41,10 +40,9 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/connectionlistview.h \
     source/Views/viewabstract.h \
     source/Misc/settingsuser.h \
-    source/Models/treemodel.h \
-    source/Models/treeitem.h \
     source/Misc/logger.h \
-    source/Misc/logableobject.h
+    source/Misc/logableobject.h \
+    source/Models/ioadapter.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui
