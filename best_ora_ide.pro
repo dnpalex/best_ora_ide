@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     source/Misc/settingsuser.cpp \
     source/Misc/logger.cpp \
     source/Misc/logableobject.cpp \
-    source/Models/ioadapter.cpp
+    source/Models/ioadapter.cpp \
+    source/Views/connectionpropview.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -42,10 +43,12 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Misc/settingsuser.h \
     source/Misc/logger.h \
     source/Misc/logableobject.h \
-    source/Models/ioadapter.h
+    source/Models/ioadapter.h \
+    source/Views/connectionpropview.h
 
 FORMS    += source/Views/mainview.ui \
-    source/Views/connectionlistview.ui
+    source/Views/connectionlistview.ui \
+    source/Views/connectionpropview.ui
 
 STATECHARTS += \
     ora_ide.scxml

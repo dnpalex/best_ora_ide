@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QStandardItemModel>
 #include <QFile>
+#include <QDomDocument>
+#include <QDomElement>
 
 #include "source/Misc/logableobject.h"
 
@@ -19,9 +21,12 @@ public:
 
 signals:
 
-    virtual void LogError(const QString& message);
+    void LogError(const QString& message);
 
-public slots:
+protected:
+
+    void recursiveRead(const QDomElement& parElem, QStandardItem &parItem);
+    QVariant createAttributeValue(const QString& name, const QString& value);
 };
 
 #endif // IOADAPTER_H

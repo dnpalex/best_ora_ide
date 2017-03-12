@@ -1,11 +1,11 @@
 #ifndef CONNECTIONLISTVIEW_H
 #define CONNECTIONLISTVIEW_H
 
-#include "source/Views/viewabstract.h"
 #include <QToolBar>
 #include <QScopedPointer>
 #include <QAbstractItemModel>
 
+#include "source/Views/viewabstract.h"
 
 namespace Ui {
 class ConnectionListView;
@@ -21,7 +21,7 @@ public:
 
     void setConnectionsModel(QAbstractItemModel* model);
 
-protected slots:
+protected:
 
     void AddConnection();
     void RemoveConnection();

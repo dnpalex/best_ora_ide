@@ -6,6 +6,7 @@ MainPresenter::MainPresenter(QObject *parent) : QObject(parent)
     connect(mainView.data(),&MainView::sigShowSubView,this,&MainPresenter::ShowSubView);
 
     ioadapter.reset(new IOAdapter(this));
+    connect(ioadapter.data(),&IOAdapter::LogError,new Logger(this),&Logger::LogMessage);
 }
 
 void MainPresenter::ShowMainView()
@@ -52,6 +53,7 @@ QAbstractItemModel* MainPresenter::getViewModel(const ViewType& viewType)
     switch (viewType) {
     case ViewType::ConnectionList:
         model = ioadapter.data()->readFile(tr(":/connections.xml"), IOAdapter::XML);
+        model->setParent(this);
     case ViewType::QueryEditor:
         break;
     case ViewType::OutPut:

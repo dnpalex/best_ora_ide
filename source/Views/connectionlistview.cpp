@@ -18,11 +18,11 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
 
     //Setup toolbar
     toolBar.reset(new QToolBar(this));
-    QAction *act = new QAction(QIcon(tr(":/database_add.png")),"",toolBar.data());
+    QAction *act = new QAction(QIcon(tr(":/db_add")),"",toolBar.data());
     connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
     toolBar->addAction(act);
 
-    act = new QAction(QIcon(tr(":/database_remove.png")),"",toolBar.data());
+    act = new QAction(QIcon(tr(":/db_remo")),"",toolBar.data());
     connect(act, &QAction::triggered, this, &ConnectionListView::RemoveConnection);
     toolBar->addAction(act);
 

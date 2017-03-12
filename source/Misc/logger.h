@@ -15,11 +15,11 @@ class Logger : public QObject, public SettingsUser
 public:
     explicit Logger(QObject *parent = 0);
 
+    void LogMessage(const QString& text);
 signals:
 
 public slots:
 
-    void LogMessage(const QString& text);
 
 private:
 

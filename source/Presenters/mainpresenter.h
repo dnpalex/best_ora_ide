@@ -10,7 +10,7 @@
 #include "source/Misc/logger.h"
 
 
-class MainPresenter : public QObject
+class MainPresenter : public QObject, SettingsUser
 {
     Q_OBJECT
 public:
