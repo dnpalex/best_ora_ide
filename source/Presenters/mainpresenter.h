@@ -4,10 +4,12 @@
 #include <QObject>
 #include <QScopedPointer>
 #include <QMap>
+
 #include "source/Views/mainview.h"
 #include "source/Views/connectionlistview.h"
 #include "source/Models/ioadapter.h"
 #include "source/Misc/logger.h"
+#include "source/Views/connectionpropview.h"
 
 
 class MainPresenter : public QObject, SettingsUser
@@ -26,12 +28,24 @@ public slots:
 
 protected:
 
+    //Views
     QScopedPointer<MainView> mainView;
+    QMap<ViewType,ViewAbstract*> views;
+
+    //getters
+
+    QScopedPointer<MainView> &getMainView();
+    ViewAbstract*& getSubView(const ViewType& viewType);
+
+    //Models
     QScopedPointer<IOAdapter> ioadapter;
+    QMap<ViewType,QAbstractItemModel*> models;
 
-    ViewAbstract* getSubView(const ViewType& viewType);
+    //getters
+    QScopedPointer<IOAdapter>& getIoadapter();
+    QAbstractItemModel*& getViewModel(const ViewType& viewType);
 
-    QAbstractItemModel *getViewModel(const ViewType& viewType);
+
 
 };
 

@@ -2,11 +2,9 @@
 
 MainPresenter::MainPresenter(QObject *parent) : QObject(parent)
 {
-    mainView.reset(new MainView());
-    connect(mainView.data(),&MainView::sigShowSubView,this,&MainPresenter::ShowSubView);
+    connect(getMainView().data(),&MainView::sigShowSubView,this,&MainPresenter::ShowSubView);
 
-    ioadapter.reset(new IOAdapter(this));
-    connect(ioadapter.data(),&IOAdapter::LogError,new Logger(this),&Logger::LogMessage);
+    connect(getIoadapter().data(),&IOAdapter::LogError,new Logger(this),&Logger::LogMessage);
 }
 
 void MainPresenter::ShowMainView()
@@ -30,36 +28,56 @@ void MainPresenter::ShowSubView(ViewType viewType)
     }
 }
 
-ViewAbstract* MainPresenter::getSubView(const ViewType& viewType)
+QScopedPointer<MainView>& MainPresenter::getMainView()
 {
-    ViewAbstract* subView = nullptr;
-    switch (viewType) {
-    case ViewType::ConnectionList:
-        subView = new ConnectionListView(ViewType::ConnectionList, getViewModel(viewType));
-        break;
-    case ViewType::QueryEditor:
-        break;
-    case ViewType::OutPut:
-        break;
-    case ViewType::Default:
-        break;
+    if(mainView.isNull()){
+        mainView.reset(new MainView());
     }
-    return subView;
+    return mainView;
 }
 
-QAbstractItemModel* MainPresenter::getViewModel(const ViewType& viewType)
+QScopedPointer<IOAdapter> &MainPresenter::getIoadapter()
 {
-    QAbstractItemModel* model = Q_NULLPTR;
-    switch (viewType) {
-    case ViewType::ConnectionList:
-        model = ioadapter.data()->readFile(tr(":/connections.xml"), IOAdapter::XML);
-        model->setParent(this);
-    case ViewType::QueryEditor:
-        break;
-    case ViewType::OutPut:
-        break;
-    case ViewType::Default:
-        break;
-    };
-    return model;
+    if(ioadapter.isNull()){
+        ioadapter.reset(new IOAdapter(this));
+    }
+    return ioadapter;
+}
+
+ViewAbstract *&MainPresenter::getSubView(const ViewType& viewType)
+{
+    if(!views[viewType]){
+        switch (viewType) {
+        case ViewType::ConnectionList:
+            views[viewType] = new ConnectionListView(viewType,getViewModel(viewType));
+            break;
+        case ViewType::QueryEditor:
+            break;
+        case ViewType::OutPut:
+            break;
+        case ViewType::Default:
+            break;
+        }
+    }
+    return views[viewType];
+}
+
+QAbstractItemModel*& MainPresenter::getViewModel(const ViewType& viewType)
+{
+    if(!models[viewType]){
+        switch (viewType) {
+        case ViewType::ConnectionList:{
+            models[viewType] = getIoadapter().data()->readFile(tr(":/connections.xml"), IOAdapter::XML);
+            models[viewType]->setParent(this);
+            break;
+        }
+        case ViewType::QueryEditor:
+            break;
+        case ViewType::OutPut:
+            break;
+        case ViewType::Default:
+            break;
+        };
+    }
+    return models[viewType];
 }
