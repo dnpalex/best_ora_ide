@@ -20,11 +20,11 @@ public:
 
     void ShowMainView();
 
-signals:
-
-public slots:
-
     void ShowSubView(ViewType viewType);
+
+    void ModelFinished(QAbstractItemModel* model, const ViewType& viewType);
+
+signals:
 
 protected:
 
@@ -44,8 +44,6 @@ protected:
     //getters
     QScopedPointer<IOAdapter>& getIoadapter();
     QAbstractItemModel*& getViewModel(const ViewType& viewType);
-
-
 
 };
 

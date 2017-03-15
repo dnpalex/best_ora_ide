@@ -1,11 +1,27 @@
 #include "ioadapter.h"
 
-IOAdapter::IOAdapter(QObject *parent) : QObject(parent), LogableObject()
+IOAdapter::IOAdapter(QObject *parent) : QObject(parent), LogableObject(), AdapterAbstract()
 {
 
 }
 
-QStandardItemModel *IOAdapter::readFile(const QString &fileName, const IOAdapter::FileType &fileType)
+void IOAdapter::RequestModel(const ViewType &viewType)
+{
+    switch (viewType) {
+    case ViewType::ConnectionList:{
+        emit ModelFinished(ReadFile(tr(":/connections.xml"), IOAdapter::XML), viewType);
+        break;
+    }
+    case ViewType::QueryEditor:
+        break;
+    case ViewType::OutPut:
+        break;
+    case ViewType::Default:
+        break;
+    }
+}
+
+QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter::FileType &fileType)
 {
     QStandardItemModel* model = Q_NULLPTR;
     QFile fl(fileName);
@@ -21,7 +37,7 @@ QStandardItemModel *IOAdapter::readFile(const QString &fileName, const IOAdapter
                 emit LogError(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
             }else{
                 model = new QStandardItemModel();
-                recursiveRead(doc.documentElement(), *model->invisibleRootItem());
+                RecursiveRead(doc.documentElement(), *model->invisibleRootItem());
             }
             break;
         }
@@ -35,7 +51,7 @@ QStandardItemModel *IOAdapter::readFile(const QString &fileName, const IOAdapter
     return model;
 }
 
-void IOAdapter::recursiveRead(const QDomElement &parElem, QStandardItem &parItem)
+void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem &parItem)
 {
     QDomElement child = parElem.firstChildElement();
     QStandardItem* item = Q_NULLPTR;
@@ -45,19 +61,19 @@ void IOAdapter::recursiveRead(const QDomElement &parElem, QStandardItem &parItem
         QDomAttr attr;
         for(int i = 0; i < attrList.count(); i++){
             attr = attrList.item(i).toAttr();
-            userData.insert(attr.name(),createAttributeValue(attr.name(),attr.value()));
+            userData.insert(attr.name(),CreateAttributeValue(attr.name(),attr.value()));
         }
         item = new QStandardItem(userData.value("ico").value<QIcon>(),userData.value("name").toString());
         item->setData(userData);
         parItem.appendRow(item);
         if(!child.firstChildElement().isNull()){
-            recursiveRead(child,*item);
+            RecursiveRead(child,*item);
         }
         child = child.nextSiblingElement();
     }
 }
 
-QVariant IOAdapter::createAttributeValue(const QString &name, const QString &value)
+QVariant IOAdapter::CreateAttributeValue(const QString &name, const QString &value)
 {
     QVariant val;
     if(name=="ico"){

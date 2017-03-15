@@ -2,6 +2,8 @@
 #define TOOLBOXABSTRACT_H
 
 #include <QWidget>
+#include <QAbstractItemModel>
+
 #include "source/Misc/settingsuser.h"
 
 enum ViewType {Default, ConnectionList,QueryEditor,OutPut};
@@ -14,6 +16,8 @@ public:
 
     ViewType getViewType();
     void setViewType(ViewType vt);
+
+    virtual void setModel(QAbstractItemModel* model) = 0;
 
 protected:
 

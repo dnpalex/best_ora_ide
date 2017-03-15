@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     source/Misc/logger.cpp \
     source/Misc/logableobject.cpp \
     source/Models/ioadapter.cpp \
-    source/Views/connectionpropview.cpp
+    source/Views/connectionpropview.cpp \
+    source/Models/adapterabstract.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -44,7 +45,8 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Misc/logger.h \
     source/Misc/logableobject.h \
     source/Models/ioadapter.h \
-    source/Views/connectionpropview.h
+    source/Views/connectionpropview.h \
+    source/Models/adapterabstract.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui \

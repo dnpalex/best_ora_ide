@@ -19,7 +19,7 @@ public:
     explicit ConnectionListView(ViewType vt, QAbstractItemModel* model = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
     ~ConnectionListView();
 
-    void setConnectionsModel(QAbstractItemModel* model);
+    void setModel(QAbstractItemModel *model);
 
 protected:
 

@@ -29,7 +29,7 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
     ui->layToolBar->addWidget(toolBar.data());
     //end toolbar
 
-    setConnectionsModel(model);
+    setModel(model);
 }
 
 ConnectionListView::~ConnectionListView()
@@ -37,7 +37,7 @@ ConnectionListView::~ConnectionListView()
     delete ui;
 }
 
-void ConnectionListView::setConnectionsModel(QAbstractItemModel* model)
+void ConnectionListView::setModel(QAbstractItemModel *model)
 {
     ui->treeView->setModel(model);
 }

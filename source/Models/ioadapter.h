@@ -8,8 +8,9 @@
 #include <QDomElement>
 
 #include "source/Misc/logableobject.h"
+#include "source/Models/adapterabstract.h"
 
-class IOAdapter : public QObject, public LogableObject
+class IOAdapter : public QObject, public LogableObject, public AdapterAbstract
 {
     Q_OBJECT
 public:
@@ -17,16 +18,19 @@ public:
 
     explicit IOAdapter(QObject *parent = 0);
 
-    QStandardItemModel* readFile(const QString& fileName, const FileType& fileType);
+    void RequestModel(const ViewType& viewType);
 
+    QStandardItemModel* ReadFile(const QString& fileName, const FileType& fileType);
 signals:
 
     void LogError(const QString& message);
 
+    void ModelFinished(QAbstractItemModel* model, const ViewType& viewType);
+
 protected:
 
-    void recursiveRead(const QDomElement& parElem, QStandardItem &parItem);
-    QVariant createAttributeValue(const QString& name, const QString& value);
+    void RecursiveRead(const QDomElement& parElem, QStandardItem &parItem);
+    QVariant CreateAttributeValue(const QString& name, const QString& value);
 };
 
 #endif // IOADAPTER_H
