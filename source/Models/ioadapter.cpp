@@ -1,15 +1,19 @@
 #include "ioadapter.h"
 
-IOAdapter::IOAdapter(QObject *parent) : QObject(parent), LogableObject(), AdapterAbstract()
+IOAdapter::IOAdapter(QObject *parent) : QEventLoop(parent), LogableObject(), AdapterAbstract(), SettingsUser()
 {
-
+    BeginConfigGroup(tr("Config"));
+    configDir.setPath(configValue(tr("folder")).toString());
+    EndConfigGroup();
 }
 
 void IOAdapter::RequestModel(const ViewType &viewType)
 {
     switch (viewType) {
     case ViewType::ConnectionList:{
-        emit ModelFinished(ReadFile(tr(":/connections.xml"), IOAdapter::XML), viewType);
+        BeginConfigGroup(tr("Connections"));
+        emit ModelFinished(ReadFile(configValue(tr("fileName")).toString(), InterpretFileType(configValue(tr("fileType")).toString())), viewType);
+        EndConfigGroup();
         break;
     }
     case ViewType::QueryEditor:
@@ -24,34 +28,42 @@ void IOAdapter::RequestModel(const ViewType &viewType)
 QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter::FileType &fileType)
 {
     QStandardItemModel* model = Q_NULLPTR;
-    QFile fl(fileName);
-    if (!fl.open(QIODevice::ReadOnly))
-    {
-        emit LogError(fl.fileName().append(": ").append(fl.errorString()));
-    }else{
-        switch(fileType){
-        case FileType::XML:{
-            QDomDocument doc(fileName);
-            QString errMsg; int errLine; int errCol;
-            if(!doc.setContent(&fl,&errMsg,&errLine,&errCol)){
-                emit LogError(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
-            }else{
-                model = new QStandardItemModel();
-                RecursiveRead(doc.documentElement(), *model->invisibleRootItem());
-            }
-            break;
+    switch(fileType){
+    case FileType::XML:{
+        QDomDocument* doc = Q_NULLPTR;
+        try {
+            doc = readXmlFile(configDir.dirName().append(QDir::separator()).append(fileName));
+        } catch (QString e) {
+            throw QString(tr("IOAdapter.ReadFile(").append(fileName).append(", ").append(fileType).append("): ").append(e));
         }
-        case FileType::JSON:
-            break;
-        default:
-            emit LogError(tr("Unsupported file type: "+fileType));
-        }
+        model = new QStandardItemModel(this);
+        RecursiveRead(doc->documentElement(), *model->invisibleRootItem());
+        break;
     }
-    fl.close();
+    case FileType::JSON:
+        break;
+    default:
+        emit LogError(tr("Unsupported file type: "+fileType));
+    }
     return model;
 }
 
-void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem &parItem)
+QDomDocument *IOAdapter::ReadGlobSettings(bool refresh)
+{
+    if(refresh){
+        BeginConfigGroup(tr("Config"));
+        readXmlFile(configDir.dirName().append(QDir::separator()).append(configValue(tr("globFileName")).toString()),&globalSettings);
+        EndConfigGroup();
+    }
+    return &globalSettings;
+}
+
+void IOAdapter::exec()
+{
+    this->QEventLoop::exec(QEventLoop::AllEvents);
+}
+
+void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem)
 {
     QDomElement child = parElem.firstChildElement();
     QStandardItem* item = Q_NULLPTR;
@@ -82,6 +94,35 @@ QVariant IOAdapter::CreateAttributeValue(const QString &name, const QString &val
         val = value;
     }
     return val;
+}
+
+IOAdapter::FileType IOAdapter::InterpretFileType(const QString &ftName)
+{
+    if(ftName == "XML") return IOAdapter::XML;
+    else if (ftName == "JSON") return IOAdapter::JSON;
+    return IOAdapter::UNKNOWN;
+}
+
+QDomDocument* IOAdapter::readXmlFile(const QString &fileName, QDomDocument *doc)
+{
+    QFile fl(fileName);
+    QDomDocument* d = Q_NULLPTR;
+    if (!fl.open(QIODevice::ReadOnly))
+    {
+        emit LogError(fl.fileName().append(": ").append(fl.errorString()));
+        throw QString(fl.fileName().append(": ").append(fl.errorString()));
+    }else{
+        QString errMsg; int errLine; int errCol;
+        d = doc==Q_NULLPTR ? new QDomDocument() : doc;
+        if(!d->setContent(&fl,&errMsg,&errLine,&errCol)){
+            emit LogError(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
+            fl.close();
+            if(doc==Q_NULLPTR) delete d;
+            throw QString(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
+        }
+    }
+    fl.close();
+    return d;
 }
 
 

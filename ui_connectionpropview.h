@@ -37,12 +37,11 @@ public:
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
     QLineEdit *lineEdit_3;
-    QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit;
-    QLabel *label;
-    QLabel *label_3;
-    QLabel *label_2;
-    QLabel *label_4;
+    QLineEdit *lineEdit2;
+    QLineEdit *lineEdit1;
+    QLabel *label1;
+    QLabel *label3;
+    QLabel *label2;
     QCheckBox *checkBox;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -81,46 +80,48 @@ public:
 
         gridLayout->addWidget(lineEdit_3, 2, 1, 1, 1);
 
-        lineEdit_2 = new QLineEdit(verticalLayoutWidget);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit2 = new QLineEdit(verticalLayoutWidget);
+        lineEdit2->setObjectName(QStringLiteral("lineEdit2"));
 
-        gridLayout->addWidget(lineEdit_2, 1, 1, 1, 1);
+        gridLayout->addWidget(lineEdit2, 1, 1, 1, 1);
 
-        lineEdit = new QLineEdit(verticalLayoutWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit1 = new QLineEdit(verticalLayoutWidget);
+        lineEdit1->setObjectName(QStringLiteral("lineEdit1"));
 
-        gridLayout->addWidget(lineEdit, 0, 1, 1, 1);
+        gridLayout->addWidget(lineEdit1, 0, 1, 1, 1);
 
-        label = new QLabel(verticalLayoutWidget);
-        label->setObjectName(QStringLiteral("label"));
+        label1 = new QLabel(verticalLayoutWidget);
+        label1->setObjectName(QStringLiteral("label1"));
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
+        gridLayout->addWidget(label1, 0, 0, 1, 1);
 
-        label_3 = new QLabel(verticalLayoutWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label3 = new QLabel(verticalLayoutWidget);
+        label3->setObjectName(QStringLiteral("label3"));
 
-        gridLayout->addWidget(label_3, 1, 0, 1, 1);
+        gridLayout->addWidget(label3, 1, 0, 1, 1);
 
-        label_2 = new QLabel(verticalLayoutWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label2 = new QLabel(verticalLayoutWidget);
+        label2->setObjectName(QStringLiteral("label2"));
 
-        gridLayout->addWidget(label_2, 2, 0, 1, 1);
-
-        label_4 = new QLabel(verticalLayoutWidget);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        gridLayout->addWidget(label_4, 3, 0, 1, 1);
+        gridLayout->addWidget(label2, 2, 0, 1, 1);
 
         checkBox = new QCheckBox(verticalLayoutWidget);
         checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setTristate(false);
 
-        gridLayout->addWidget(checkBox, 3, 1, 1, 1);
+        gridLayout->addWidget(checkBox, 3, 0, 1, 2);
 
 
         verticalLayout->addLayout(gridLayout);
 
         tabWidget = new QTabWidget(verticalLayoutWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setElideMode(Qt::ElideNone);
+        tabWidget->setUsesScrollButtons(false);
+        tabWidget->setDocumentMode(false);
+        tabWidget->setTabsClosable(true);
+        tabWidget->setMovable(true);
+        tabWidget->setTabBarAutoHide(false);
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         tabWidget->addTab(tab, QString());
@@ -137,17 +138,19 @@ public:
 
         retranslateUi(ConnectionPropView);
 
+        tabWidget->setCurrentIndex(0);
+
+
         QMetaObject::connectSlotsByName(ConnectionPropView);
     } // setupUi
 
     void retranslateUi(QWidget *ConnectionPropView)
     {
         ConnectionPropView->setWindowTitle(QApplication::translate("ConnectionPropView", "Form", Q_NULLPTR));
-        label->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
-        label_3->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
-        label_2->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
-        label_4->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
-        checkBox->setText(QApplication::translate("ConnectionPropView", "CheckBox", Q_NULLPTR));
+        label1->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
+        label3->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
+        label2->setText(QApplication::translate("ConnectionPropView", "TextLabel", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("ConnectionPropView", "Save password", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("ConnectionPropView", "Tab 1", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("ConnectionPropView", "Tab 2", Q_NULLPTR));
     } // retranslateUi

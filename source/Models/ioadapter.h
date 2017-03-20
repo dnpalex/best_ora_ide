@@ -6,21 +6,28 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QEventLoop>
+#include <QDir>
+#include <QThread>
 
 #include "source/Misc/logableobject.h"
 #include "source/Models/adapterabstract.h"
 
-class IOAdapter : public QObject, public LogableObject, public AdapterAbstract
+class IOAdapter : public QEventLoop, public LogableObject, public AdapterAbstract, public SettingsUser
 {
     Q_OBJECT
 public:
-    enum FileType {XML, JSON};
+    enum FileType {XML, JSON, UNKNOWN};
 
     explicit IOAdapter(QObject *parent = 0);
 
     void RequestModel(const ViewType& viewType);
 
     QStandardItemModel* ReadFile(const QString& fileName, const FileType& fileType);
+    QDomDocument* ReadGlobSettings(bool refresh = false);
+
+    virtual void exec();
+
 signals:
 
     void LogError(const QString& message);
@@ -29,8 +36,13 @@ signals:
 
 protected:
 
-    void RecursiveRead(const QDomElement& parElem, QStandardItem &parItem);
+    QDir configDir;
+    QDomDocument globalSettings;
+
+    void RecursiveRead(const QDomElement& parElem, QStandardItem& parItem);
     QVariant CreateAttributeValue(const QString& name, const QString& value);
+    IOAdapter::FileType InterpretFileType(const QString& ftName);
+    QDomDocument* readXmlFile(const QString& fileName, QDomDocument* doc = Q_NULLPTR);
 };
 
 #endif // IOADAPTER_H

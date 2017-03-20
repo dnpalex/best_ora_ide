@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QScopedPointer>
 #include <QMap>
+#include <QThread>
+#include <QApplication>
+#include <QCloseEvent>
 
 #include "source/Views/mainview.h"
 #include "source/Views/connectionlistview.h"
@@ -12,38 +15,45 @@
 #include "source/Views/connectionpropview.h"
 
 
-class MainPresenter : public QObject, SettingsUser
+class MainPresenter : public QApplication, public SettingsUser
 {
     Q_OBJECT
 public:
-    explicit MainPresenter(QObject *parent = 0);
+    explicit MainPresenter(int& argc,char**argv,int appflags = QApplication::ApplicationFlags);
+    ~MainPresenter();
 
-    void ShowMainView();
+    virtual int exec();
 
-    void ShowSubView(ViewType viewType);
+    void ShowSubView(const ViewType& viewType);
 
     void ModelFinished(QAbstractItemModel* model, const ViewType& viewType);
 
+    void MainViewClosed(QCloseEvent* event);
+
 signals:
+
+    void RequestModel(const ViewType& viewType);
 
 protected:
 
     //Views
-    QScopedPointer<MainView> mainView;
+    MainView* mainView;
     QMap<ViewType,ViewAbstract*> views;
 
     //getters
-
-    QScopedPointer<MainView> &getMainView();
     ViewAbstract*& getSubView(const ViewType& viewType);
 
     //Models
-    QScopedPointer<IOAdapter> ioadapter;
     QMap<ViewType,QAbstractItemModel*> models;
 
     //getters
-    QScopedPointer<IOAdapter>& getIoadapter();
     QAbstractItemModel*& getViewModel(const ViewType& viewType);
+
+    //Threads
+    QThread* ioThread;
+
+    //Logger
+    Logger* logger;
 
 };
 

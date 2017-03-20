@@ -9,16 +9,17 @@ MainView::MainView(QWidget *parent) :
     connect(ui->actionConnection_list,&QAction::triggered,[=]() {
         auto view = ifViewAvailable(ViewType::ConnectionList);
         if(view  == nullptr){
-            emit sigShowSubView(ViewType::ConnectionList);
+            emit ShowSubView(ViewType::ConnectionList);
         }else{
             view->parentWidget()->showNormal();
         }
-    });
+    });   
 }
 
 MainView::~MainView()
 {
     delete ui;
+    emit this->destroyed();
 }
 
 void MainView::AddToolBox(ViewAbstract *tb)
@@ -33,12 +34,12 @@ void MainView::AddToolBox(ViewAbstract *tb)
     //dock->setFeatures(QDockWidget::DockWidgetVerticalTitleBar);
     dock->setWidget(tb);
     tb->setParent(dock);
-    addDockWidget(Qt::RightDockWidgetArea, dock);
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
 }
 
-ViewAbstract* MainView::ifViewAvailable(ViewType vt)
+ViewAbstract* MainView::ifViewAvailable(const ViewType& vt)
 {
-    ViewAbstract* va = nullptr;
+    ViewAbstract* va = Q_NULLPTR;
     foreach(auto c, findChildren<ViewAbstract*>()){
         if(c->getViewType() == vt){
             va = c;
@@ -46,4 +47,9 @@ ViewAbstract* MainView::ifViewAvailable(ViewType vt)
         }
     }
     return va;
+}
+
+void MainView::closeEvent(QCloseEvent *event)
+{
+    emit Close(event);
 }

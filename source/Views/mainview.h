@@ -21,11 +21,14 @@ public:
 
 signals:
 
-    void sigShowSubView(ViewType);
+    void ShowSubView(ViewType);
+    void Close(QCloseEvent *event);
 
 protected:
 
-    ViewAbstract* ifViewAvailable(ViewType vt);
+    ViewAbstract* ifViewAvailable(const ViewType &vt);
+
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainView *ui;

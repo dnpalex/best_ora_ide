@@ -1,25 +1,44 @@
 #include "mainpresenter.h"
 
-MainPresenter::MainPresenter(QObject *parent) : QObject(parent)
+MainPresenter::MainPresenter(int& argc,char**argv,int appflags) : QApplication(argc,argv,appflags), SettingsUser()
 {
-    connect(getMainView().data(),&MainView::sigShowSubView,this,&MainPresenter::ShowSubView);
+    logger = new Logger(this);
+    ioThread = new QThread();
 
-    connect(getIoadapter().data(),&IOAdapter::LogError,new Logger(getIoadapter().data()),&Logger::LogMessage);
-    connect(getIoadapter().data(),&IOAdapter::ModelFinished,this,&MainPresenter::ModelFinished);
+    mainView = new MainView();
+    connect(mainView,&MainView::ShowSubView,this,&MainPresenter::ShowSubView);
+    connect(mainView,&MainView::Close,this,&MainPresenter::MainViewClosed);
+
+    IOAdapter* ioAdapter = new IOAdapter();
+    connect(ioThread, &QThread::started, ioAdapter, &IOAdapter::exec);
+    connect(ioThread, &QThread::finished, ioAdapter, &IOAdapter::quit);
+    connect(ioAdapter,&IOAdapter::LogError,logger,&Logger::LogMessage);
+    connect(ioAdapter,&IOAdapter::ModelFinished,this,&MainPresenter::ModelFinished);
+    connect(this, &MainPresenter::RequestModel, ioAdapter,&IOAdapter::RequestModel);
+
+    ioAdapter->moveToThread(ioThread);
+    ioThread->start();
 }
 
-void MainPresenter::ShowMainView()
+MainPresenter::~MainPresenter()
 {
-    getMainView().data()->show();
+    ioThread->quit();
+    ioThread->wait();
 }
 
-void MainPresenter::ShowSubView(ViewType viewType)
+int MainPresenter::exec()
+{
+    mainView->show();
+    return this->QApplication::exec();
+}
+
+void MainPresenter::ShowSubView(const ViewType& viewType)
 {
     ViewAbstract* subView = getSubView(viewType);
     switch (viewType){
     case ViewType::ConnectionList:{
-        getMainView().data()->AddToolBox(subView);
-        getIoadapter().data()->RequestModel(viewType);
+        mainView->AddToolBox(subView);
+        emit RequestModel(viewType);
         break;
     }
     case ViewType::OutPut:
@@ -36,7 +55,6 @@ void MainPresenter::ModelFinished(QAbstractItemModel *model, const ViewType &vie
     if(model != Q_NULLPTR){
         if(models[viewType] == Q_NULLPTR){
             models[viewType] = model;
-            models[viewType]->setParent(this);
         }else{
             models[viewType]->deleteLater();
             models[viewType] = model;
@@ -48,21 +66,12 @@ void MainPresenter::ModelFinished(QAbstractItemModel *model, const ViewType &vie
     }
 }
 
-QScopedPointer<MainView>& MainPresenter::getMainView()
+void MainPresenter::MainViewClosed(QCloseEvent *event)
 {
-    if(mainView.isNull()){
-        mainView.reset(new MainView());
-    }
-    return mainView;
+    delete mainView;
+    this->quit();
 }
 
-QScopedPointer<IOAdapter> &MainPresenter::getIoadapter()
-{
-    if(ioadapter.isNull()){
-        ioadapter.reset(new IOAdapter(this));
-    }
-    return ioadapter;
-}
 
 ViewAbstract *&MainPresenter::getSubView(const ViewType& viewType)
 {
@@ -84,20 +93,5 @@ ViewAbstract *&MainPresenter::getSubView(const ViewType& viewType)
 
 QAbstractItemModel*& MainPresenter::getViewModel(const ViewType& viewType)
 {
-    if(!models[viewType]){
-        switch (viewType) {
-        case ViewType::ConnectionList:{
-            models[viewType] = getIoadapter().data()->ReadFile(tr(":/connections.xml"), IOAdapter::XML);
-            models[viewType]->setParent(this);
-            break;
-        }
-        case ViewType::QueryEditor:
-            break;
-        case ViewType::OutPut:
-            break;
-        case ViewType::Default:
-            break;
-        };
-    }
     return models[viewType];
 }

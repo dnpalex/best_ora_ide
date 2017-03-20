@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>connections.xml</file>
-    </qresource>
-    <qresource prefix="/">
         <file>config.ini</file>
     </qresource>
 </RCC>

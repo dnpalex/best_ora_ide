@@ -14,16 +14,14 @@ class Logger : public QObject, public SettingsUser
     Q_OBJECT
 public:
     explicit Logger(QObject *parent = 0);
+    ~Logger();
 
     void LogMessage(const QString& text);
-signals:
-
-public slots:
 
 
 private:
 
-    QFile errorLogFile;
+    QFile* errorLogFile;
 
 };
 
