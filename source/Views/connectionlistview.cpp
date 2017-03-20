@@ -8,25 +8,19 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
     ui->setupUi(this);
     setViewType(vt);
 
-    //Read text settings group
-    BeginTextGroup(tr("ConnectionList"));
-
-    setWindowTitle(textValue("windowTitle").toString());
-
-    EndTextGroup();
-    //End text settings group
-
     //Setup toolbar
-    toolBar.reset(new QToolBar(this));
-    QAction *act = new QAction(QIcon(tr(":/db_add")),"",toolBar.data());
+    QToolBar* toolBar = new QToolBar(this);
+    QAction* act = new QAction(toolBar); //QIcon(tr(":/db_add")),"",toolBar
+    act->setObjectName(tr("addConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
     toolBar->addAction(act);
 
-    act = new QAction(QIcon(tr(":/db_remo")),"",toolBar.data());
+    act = new QAction(toolBar); //QIcon(tr(":/db_remo")),"",toolBar
+    act->setObjectName(tr("removeConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::RemoveConnection);
     toolBar->addAction(act);
 
-    ui->layToolBar->addWidget(toolBar.data());
+    ui->layToolBar->addWidget(toolBar);
     //end toolbar
 
     setModel(model);

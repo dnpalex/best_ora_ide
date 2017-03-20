@@ -6,14 +6,14 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QEventLoop>
+#include <QThread>
 #include <QDir>
 #include <QThread>
 
 #include "source/Misc/logableobject.h"
 #include "source/Models/adapterabstract.h"
 
-class IOAdapter : public QEventLoop, public LogableObject, public AdapterAbstract, public SettingsUser
+class IOAdapter : public QThread, public LogableObject, public AdapterAbstract, public SettingsUser
 {
     Q_OBJECT
 public:
@@ -21,28 +21,29 @@ public:
 
     explicit IOAdapter(QObject *parent = 0);
 
-    void RequestModel(const ViewType& viewType);
+    void RequestModel(const ViewType& viewType) Q_DECL_OVERRIDE;
 
     QStandardItemModel* ReadFile(const QString& fileName, const FileType& fileType);
+
     QDomDocument* ReadGlobSettings(bool refresh = false);
 
-    virtual void exec();
+    virtual void run() Q_DECL_OVERRIDE;
 
 signals:
 
-    void LogError(const QString& message);
+    void LogError(const QString& message) Q_DECL_OVERRIDE;
 
-    void ModelFinished(QAbstractItemModel* model, const ViewType& viewType);
+    void ModelFinished(QAbstractItemModel* model, const ViewType& viewType) Q_DECL_OVERRIDE;
 
 protected:
 
-    QDir configDir;
     QDomDocument globalSettings;
 
     void RecursiveRead(const QDomElement& parElem, QStandardItem& parItem);
     QVariant CreateAttributeValue(const QString& name, const QString& value);
     IOAdapter::FileType InterpretFileType(const QString& ftName);
-    QDomDocument* readXmlFile(const QString& fileName, QDomDocument* doc = Q_NULLPTR);
+    QDomDocument* ReadXmlFile(const QString& fileName, QDomDocument* doc = Q_NULLPTR);
+    QDir AcquireDir(const QString& configGroup);
 };
 
 #endif // IOADAPTER_H

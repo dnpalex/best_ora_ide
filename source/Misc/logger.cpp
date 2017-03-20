@@ -2,15 +2,11 @@
 
 Logger::Logger(QObject *parent) : QObject(parent), SettingsUser()
 {
-    BeginConfigGroup(tr("Log"));
-
-    QDir logDir(configValue(tr("folder")).toString());
+    QDir logDir(configValue(tr("Log"),tr("folder")).toString());
     if(!logDir.exists() && !logDir.mkdir(logDir.absolutePath())){
         throw tr("Logger. Cannot create a directory:").append(logDir.absolutePath());
     }
-    errorLogFile = new QFile(logDir.dirName().append(QDir::separator()).append(configValue(tr("fileName")).toString()), this);
-
-    EndConfigGroup();
+    errorLogFile = new QFile(logDir.dirName().append(QDir::separator()).append(configValue(tr("Log"),tr("fileName")).toString()), this);
 }
 
 Logger::~Logger()

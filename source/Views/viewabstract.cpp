@@ -1,6 +1,6 @@
 #include "viewabstract.h"
 
-ViewAbstract::ViewAbstract(QWidget* parent) : QWidget(parent), SettingsUser()
+ViewAbstract::ViewAbstract(QWidget* parent) : QWidget(parent)
 {
     qRegisterMetaType<ViewType>("ViewType");
 }

@@ -28,7 +28,6 @@ protected:
 
 private:
     Ui::ConnectionListView *ui;
-    QScopedPointer<QToolBar> toolBar;
 };
 
 #endif // CONNECTIONLISTVIEW_H

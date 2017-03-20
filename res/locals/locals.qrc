@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/" lang="uk_UA">
-        <file alias="general">general_ua.ini</file>
+        <file alias="global_locale">uk_ua.xml</file>
     </qresource>
     <qresource prefix="/">
-        <file alias="general">general_ua.ini</file>
+        <file alias="global_locale">uk_ua.xml</file>
     </qresource>
 </RCC>

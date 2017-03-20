@@ -10,7 +10,7 @@ enum ViewType {Default, ConnectionList,QueryEditor,OutPut};
 
 Q_DECLARE_METATYPE(ViewType)
 
-class ViewAbstract : public QWidget, public SettingsUser
+class ViewAbstract : public QWidget
 {
 public:
 

@@ -39,21 +39,18 @@ protected:
     //Views
     MainView* mainView;
     QMap<ViewType,ViewAbstract*> views;
+    //Models
+    QMap<ViewType,QAbstractItemModel*> models;
+    //Logger
+    Logger* logger;
+    //Adapters
+    IOAdapter* ioAdapter;
+    //Resources
+    QDomDocument* locale;
 
     //getters
     ViewAbstract*& getSubView(const ViewType& viewType);
-
-    //Models
-    QMap<ViewType,QAbstractItemModel*> models;
-
-    //getters
     QAbstractItemModel*& getViewModel(const ViewType& viewType);
-
-    //Threads
-    QThread* ioThread;
-
-    //Logger
-    Logger* logger;
 
 };
 

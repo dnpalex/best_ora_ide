@@ -1,19 +1,16 @@
 #include "ioadapter.h"
 
-IOAdapter::IOAdapter(QObject *parent) : QEventLoop(parent), LogableObject(), AdapterAbstract(), SettingsUser()
+IOAdapter::IOAdapter(QObject *parent) : QThread(parent), LogableObject(), AdapterAbstract(), SettingsUser()
 {
-    BeginConfigGroup(tr("Config"));
-    configDir.setPath(configValue(tr("folder")).toString());
-    EndConfigGroup();
 }
 
 void IOAdapter::RequestModel(const ViewType &viewType)
 {
     switch (viewType) {
     case ViewType::ConnectionList:{
-        BeginConfigGroup(tr("Connections"));
-        emit ModelFinished(ReadFile(configValue(tr("fileName")).toString(), InterpretFileType(configValue(tr("fileType")).toString())), viewType);
-        EndConfigGroup();
+        emit ModelFinished(ReadFile(configValue(tr("Connections"),tr("fileName")).toString(),
+                                    InterpretFileType(configValue(tr("Connections"),tr("fileType")).toString())),
+                           viewType);
         break;
     }
     case ViewType::QueryEditor:
@@ -31,19 +28,16 @@ QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter
     switch(fileType){
     case FileType::XML:{
         QDomDocument* doc = Q_NULLPTR;
-        try {
-            doc = readXmlFile(configDir.dirName().append(QDir::separator()).append(fileName));
-        } catch (QString e) {
-            throw QString(tr("IOAdapter.ReadFile(").append(fileName).append(", ").append(fileType).append("): ").append(e));
-        }
+        doc = ReadXmlFile(AcquireDir(tr("Config")).dirName().append(QDir::separator()).append(fileName));
         model = new QStandardItemModel(this);
         RecursiveRead(doc->documentElement(), *model->invisibleRootItem());
         break;
     }
     case FileType::JSON:
         break;
-    default:
-        emit LogError(tr("Unsupported file type: "+fileType));
+    case FileType::UNKNOWN:
+        emit LogError(tr("Unsupported file type: ").append(fileType));
+        break;
     }
     return model;
 }
@@ -51,16 +45,15 @@ QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter
 QDomDocument *IOAdapter::ReadGlobSettings(bool refresh)
 {
     if(refresh){
-        BeginConfigGroup(tr("Config"));
-        readXmlFile(configDir.dirName().append(QDir::separator()).append(configValue(tr("globFileName")).toString()),&globalSettings);
-        EndConfigGroup();
+        ReadXmlFile(AcquireDir(tr("Config")).dirName().append(QDir::separator()).append(configValue(tr("Config"),tr("globFileName")).toString()),
+                    &globalSettings);
     }
     return &globalSettings;
 }
 
-void IOAdapter::exec()
+void IOAdapter::run()
 {
-    this->QEventLoop::exec(QEventLoop::AllEvents);
+    exec();
 }
 
 void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem)
@@ -103,26 +96,31 @@ IOAdapter::FileType IOAdapter::InterpretFileType(const QString &ftName)
     return IOAdapter::UNKNOWN;
 }
 
-QDomDocument* IOAdapter::readXmlFile(const QString &fileName, QDomDocument *doc)
+QDomDocument* IOAdapter::ReadXmlFile(const QString &fileName, QDomDocument *doc)
 {
     QFile fl(fileName);
     QDomDocument* d = Q_NULLPTR;
     if (!fl.open(QIODevice::ReadOnly))
     {
         emit LogError(fl.fileName().append(": ").append(fl.errorString()));
-        throw QString(fl.fileName().append(": ").append(fl.errorString()));
     }else{
         QString errMsg; int errLine; int errCol;
         d = doc==Q_NULLPTR ? new QDomDocument() : doc;
         if(!d->setContent(&fl,&errMsg,&errLine,&errCol)){
-            emit LogError(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
-            fl.close();
             if(doc==Q_NULLPTR) delete d;
-            throw QString(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
+            d = Q_NULLPTR;
+            emit LogError(errMsg.append(". line:").append(errLine).append(", column:").append(errCol));
         }
     }
     fl.close();
     return d;
+}
+
+QDir IOAdapter::AcquireDir(const QString &configGroup)
+{
+    QDir dir(configValue(configGroup,tr("folder")).toString());
+    if(!dir.exists()) dir.mkpath(dir.absolutePath());
+    return dir;
 }
 
 

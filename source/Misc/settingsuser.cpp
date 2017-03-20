@@ -1,34 +1,11 @@
 #include "settingsuser.h"
 
-SettingsUser::SettingsUser() : textSettings(":/general", QSettings::IniFormat), config(":/config.ini", QSettings::IniFormat){}
+SettingsUser::SettingsUser() : config(":/config", QSettings::IniFormat){}
 
-QVariant SettingsUser::textValue(QString key)
+QVariant SettingsUser::configValue(const QString& group, const QString& key)
 {
-    return textSettings.value(key, "Default Text");
-}
-
-QVariant SettingsUser::configValue(QString key)
-{
-    return config.value(key);
-}
-
-void SettingsUser::BeginTextGroup(QString gn)
-{
-    textSettings.beginGroup(gn);
-}
-
-void SettingsUser::EndTextGroup()
-{
-    textSettings.endGroup();
-}
-
-void SettingsUser::BeginConfigGroup(QString gn)
-{
-    config.beginGroup(gn);
-}
-
-void SettingsUser::EndConfigGroup()
-{
+    config.beginGroup(group);
+    QVariant val = config.value(key);
     config.endGroup();
+    return val;
 }
-

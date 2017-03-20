@@ -3,27 +3,24 @@
 MainPresenter::MainPresenter(int& argc,char**argv,int appflags) : QApplication(argc,argv,appflags), SettingsUser()
 {
     logger = new Logger(this);
-    ioThread = new QThread();
 
     mainView = new MainView();
     connect(mainView,&MainView::ShowSubView,this,&MainPresenter::ShowSubView);
     connect(mainView,&MainView::Close,this,&MainPresenter::MainViewClosed);
 
-    IOAdapter* ioAdapter = new IOAdapter();
-    connect(ioThread, &QThread::started, ioAdapter, &IOAdapter::exec);
-    connect(ioThread, &QThread::finished, ioAdapter, &IOAdapter::quit);
+    ioAdapter = new IOAdapter();
+    locale = ioAdapter->ReadGlobSettings(true);
     connect(ioAdapter,&IOAdapter::LogError,logger,&Logger::LogMessage);
     connect(ioAdapter,&IOAdapter::ModelFinished,this,&MainPresenter::ModelFinished);
+    connect(ioAdapter,&QThread::finished, ioAdapter, &QObject::deleteLater);
     connect(this, &MainPresenter::RequestModel, ioAdapter,&IOAdapter::RequestModel);
 
-    ioAdapter->moveToThread(ioThread);
-    ioThread->start();
+    ioAdapter->start();
 }
 
 MainPresenter::~MainPresenter()
 {
-    ioThread->quit();
-    ioThread->wait();
+    ioAdapter->quit();
 }
 
 int MainPresenter::exec()

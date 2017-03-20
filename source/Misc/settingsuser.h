@@ -12,18 +12,10 @@ public:
 
 protected:
 
-    QVariant textValue(QString key);
-    QVariant configValue(QString key);
-
-    void BeginTextGroup(QString gn);
-    void EndTextGroup();
-
-    void BeginConfigGroup(QString gn);
-    void EndConfigGroup();
+    QVariant configValue(const QString& group, const QString& key);
 
 private:
 
-    QSettings textSettings;
     QSettings config;
 };
 

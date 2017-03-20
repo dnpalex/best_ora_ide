@@ -52,6 +52,5 @@ FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui \
     source/Views/connectionpropview.ui
 
-STATECHARTS += \
-    ora_ide.scxml
+STATECHARTS +=
 
