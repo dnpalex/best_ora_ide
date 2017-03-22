@@ -9,10 +9,11 @@ class AdapterAbstract
 {
 public:
     AdapterAbstract();
+    virtual ~AdapterAbstract();
 
-    virtual void RequestModel(const ViewType& viewType) = 0;
+    virtual void RequestModel(const ViewAbstract::ViewType& viewType) = 0;
 
-    virtual void ModelFinished(QAbstractItemModel* model, const ViewType& viewType) = 0;
+    virtual void ModelFinished(QAbstractItemModel* model, const ViewAbstract::ViewType& viewType) = 0;
 };
 
 #endif // ADAPTERABSTRACT_H

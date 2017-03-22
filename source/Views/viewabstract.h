@@ -3,24 +3,30 @@
 
 #include <QWidget>
 #include <QAbstractItemModel>
+#include <QDomDocument>
+#include <QMetaEnum>
+#include <QMetaObject>
 
 #include "source/Misc/settingsuser.h"
 
-enum ViewType {Default, ConnectionList,QueryEditor,OutPut};
-
-Q_DECLARE_METATYPE(ViewType)
 
 class ViewAbstract : public QWidget
 {
-public:
+    Q_OBJECT
 
+public:
+    enum ViewType {Default, ConnectionList,QueryEditor,OutPut};
+    Q_ENUM(ViewType)
 
     ViewAbstract(QWidget* parent = 0);
     virtual ~ViewAbstract();
 
-    ViewType getViewType();
-    void setViewType(const ViewType &vt);
+    ViewAbstract::ViewType getViewType() const;
+    QString getViewTypeStr() const;
 
+    void ApplySettings(const QDomElement& root);
+
+    void setViewType(const ViewAbstract::ViewType &vt);
     virtual void setModel(QAbstractItemModel* model) = 0;
 
 protected:

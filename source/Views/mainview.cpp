@@ -7,9 +7,9 @@ MainView::MainView(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->actionConnection_list,&QAction::triggered,[=]() {
-        auto view = ifViewAvailable(ViewType::ConnectionList);
+        auto view = ifViewAvailable(ViewAbstract::ConnectionList);
         if(view  == nullptr){
-            emit ShowSubView(ViewType::ConnectionList);
+            emit ShowSubView(ViewAbstract::ConnectionList);
         }else{
             view->parentWidget()->showNormal();
         }
@@ -25,7 +25,7 @@ MainView::~MainView()
 void MainView::AddToolBox(ViewAbstract *tb)
 {
     QDockWidget* dock = new QDockWidget(tb->windowTitle(),this);
-    if(tb->getViewType() != ViewType::OutPut) {
+    if(tb->getViewType() != ViewAbstract::OutPut) {
         dock->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
     }
     else {
@@ -37,7 +37,7 @@ void MainView::AddToolBox(ViewAbstract *tb)
     addDockWidget(Qt::LeftDockWidgetArea, dock);
 }
 
-ViewAbstract* MainView::ifViewAvailable(const ViewType& vt)
+ViewAbstract* MainView::ifViewAvailable(const ViewAbstract::ViewType& vt)
 {
     ViewAbstract* va = Q_NULLPTR;
     foreach(auto c, findChildren<ViewAbstract*>()){

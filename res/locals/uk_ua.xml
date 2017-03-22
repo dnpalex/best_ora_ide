@@ -2,13 +2,13 @@
 <tree>
 	<viewclass name="MainView" windowTitle="ORA Integrated Development Environment">
 	</viewclass>
-	<viewclass name="ConnectionListView" windowTitle="Connections">
+	<viewclass name="ConnectionList" windowTitle="Connections">
 		<widget name="toolBar">
 			<widget name="addConnection" ico=":/db_add"/>
 			<widget name="removeConnection" ico=":/db_remo"/>
 		</widget>
 	</viewclass>
-	<viewclass name="ConnectionPropView" windowTitle="Create connection">
+	<viewclass name="ConnectionProp" windowTitle="Create connection">
 		<widget name="label1" text="Name" />
 		<widget name="label2" text="User" />
 		<widget name="label3" text="Password" />

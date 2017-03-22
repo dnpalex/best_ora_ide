@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainView_t {
     QByteArrayData data[7];
-    char stringdata0[56];
+    char stringdata0[70];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,14 +34,14 @@ static const qt_meta_stringdata_MainView_t qt_meta_stringdata_MainView = {
 QT_MOC_LITERAL(0, 0, 8), // "MainView"
 QT_MOC_LITERAL(1, 9, 11), // "ShowSubView"
 QT_MOC_LITERAL(2, 21, 0), // ""
-QT_MOC_LITERAL(3, 22, 8), // "ViewType"
-QT_MOC_LITERAL(4, 31, 5), // "Close"
-QT_MOC_LITERAL(5, 37, 12), // "QCloseEvent*"
-QT_MOC_LITERAL(6, 50, 5) // "event"
+QT_MOC_LITERAL(3, 22, 22), // "ViewAbstract::ViewType"
+QT_MOC_LITERAL(4, 45, 5), // "Close"
+QT_MOC_LITERAL(5, 51, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(6, 64, 5) // "event"
 
     },
-    "MainView\0ShowSubView\0\0ViewType\0Close\0"
-    "QCloseEvent*\0event"
+    "MainView\0ShowSubView\0\0ViewAbstract::ViewType\0"
+    "Close\0QCloseEvent*\0event"
 };
 #undef QT_MOC_LITERAL
 
@@ -75,26 +75,15 @@ void MainView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         MainView *_t = static_cast<MainView *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->ShowSubView((*reinterpret_cast< ViewType(*)>(_a[1]))); break;
+        case 0: _t->ShowSubView((*reinterpret_cast< ViewAbstract::ViewType(*)>(_a[1]))); break;
         case 1: _t->Close((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
         default: ;
-        }
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        switch (_id) {
-        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 0:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ViewType >(); break;
-            }
-            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (MainView::*_t)(ViewType );
+            typedef void (MainView::*_t)(ViewAbstract::ViewType );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainView::ShowSubView)) {
                 *result = 0;
                 return;
@@ -140,14 +129,14 @@ int MainView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 2)
-            qt_static_metacall(this, _c, _id, _a);
+            *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 2;
     }
     return _id;
 }
 
 // SIGNAL 0
-void MainView::ShowSubView(ViewType _t1)
+void MainView::ShowSubView(ViewAbstract::ViewType _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

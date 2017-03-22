@@ -4,3 +4,8 @@ AdapterAbstract::AdapterAbstract()
 {
 
 }
+
+AdapterAbstract::~AdapterAbstract()
+{
+
+}

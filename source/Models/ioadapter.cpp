@@ -4,20 +4,20 @@ IOAdapter::IOAdapter(QObject *parent) : QThread(parent), LogableObject(), Adapte
 {
 }
 
-void IOAdapter::RequestModel(const ViewType &viewType)
+void IOAdapter::RequestModel(const ViewAbstract::ViewType &viewType)
 {
     switch (viewType) {
-    case ViewType::ConnectionList:{
+    case ViewAbstract::ConnectionList:{
         emit ModelFinished(ReadFile(configValue(tr("Connections"),tr("fileName")).toString(),
                                     InterpretFileType(configValue(tr("Connections"),tr("fileType")).toString())),
                            viewType);
         break;
     }
-    case ViewType::QueryEditor:
+    case ViewAbstract::QueryEditor:
         break;
-    case ViewType::OutPut:
+    case ViewAbstract::OutPut:
         break;
-    case ViewType::Default:
+    case ViewAbstract::Default:
         break;
     }
 }
@@ -66,7 +66,7 @@ void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem
         QDomAttr attr;
         for(int i = 0; i < attrList.count(); i++){
             attr = attrList.item(i).toAttr();
-            userData.insert(attr.name(),CreateAttributeValue(attr.name(),attr.value()));
+            userData.insert(attr.name(),QtXML::CreateAttributeValue(attr));
         }
         item = new QStandardItem(userData.value("ico").value<QIcon>(),userData.value("name").toString());
         item->setData(userData);
@@ -76,17 +76,6 @@ void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem
         }
         child = child.nextSiblingElement();
     }
-}
-
-QVariant IOAdapter::CreateAttributeValue(const QString &name, const QString &value)
-{
-    QVariant val;
-    if(name=="ico"){
-        val = QIcon(value);
-    }else{
-        val = value;
-    }
-    return val;
 }
 
 IOAdapter::FileType IOAdapter::InterpretFileType(const QString &ftName)

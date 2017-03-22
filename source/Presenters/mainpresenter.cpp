@@ -29,25 +29,25 @@ int MainPresenter::exec()
     return this->QApplication::exec();
 }
 
-void MainPresenter::ShowSubView(const ViewType& viewType)
+void MainPresenter::ShowSubView(const ViewAbstract::ViewType& viewType)
 {
     ViewAbstract* subView = getSubView(viewType);
     switch (viewType){
-    case ViewType::ConnectionList:{
+    case ViewAbstract::ConnectionList:{
         mainView->AddToolBox(subView);
         emit RequestModel(viewType);
         break;
     }
-    case ViewType::OutPut:
+    case ViewAbstract::OutPut:
         break;
-    case ViewType::QueryEditor:
+    case ViewAbstract::QueryEditor:
         break;
-    case ViewType::Default:
+    case ViewAbstract::Default:
         break;
     }
 }
 
-void MainPresenter::ModelFinished(QAbstractItemModel *model, const ViewType &viewType)
+void MainPresenter::ModelFinished(QAbstractItemModel *model, const ViewAbstract::ViewType &viewType)
 {
     if(model != Q_NULLPTR){
         if(models[viewType] == Q_NULLPTR){
@@ -65,30 +65,32 @@ void MainPresenter::ModelFinished(QAbstractItemModel *model, const ViewType &vie
 
 void MainPresenter::MainViewClosed(QCloseEvent *event)
 {
+    event->accept();
     delete mainView;
     this->quit();
 }
 
 
-ViewAbstract *&MainPresenter::getSubView(const ViewType& viewType)
+ViewAbstract *&MainPresenter::getSubView(const ViewAbstract::ViewType& viewType)
 {
     if(!views[viewType]){
         switch (viewType) {
-        case ViewType::ConnectionList:
+        case ViewAbstract::ConnectionList:
             views[viewType] = new ConnectionListView(viewType);
             break;
-        case ViewType::QueryEditor:
+        case ViewAbstract::QueryEditor:
             break;
-        case ViewType::OutPut:
+        case ViewAbstract::OutPut:
             break;
-        case ViewType::Default:
+        case ViewAbstract::Default:
             break;
         }
+        views[viewType]->ApplySettings(QtXML::ElementByNameNTag(locale->documentElement(),tr("viewclass"),views[viewType]->getViewTypeStr()));
     }
     return views[viewType];
 }
 
-QAbstractItemModel*& MainPresenter::getViewModel(const ViewType& viewType)
+QAbstractItemModel*& MainPresenter::getViewModel(const ViewAbstract::ViewType& viewType)
 {
     return models[viewType];
 }

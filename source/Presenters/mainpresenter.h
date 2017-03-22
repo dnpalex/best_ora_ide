@@ -13,6 +13,7 @@
 #include "source/Models/ioadapter.h"
 #include "source/Misc/logger.h"
 #include "source/Views/connectionpropview.h"
+#include "source/Misc/qtxml.h"
 
 
 class MainPresenter : public QApplication, public SettingsUser
@@ -24,23 +25,23 @@ public:
 
     virtual int exec();
 
-    void ShowSubView(const ViewType& viewType);
+    void ShowSubView(const ViewAbstract::ViewType& viewType);
 
-    void ModelFinished(QAbstractItemModel* model, const ViewType& viewType);
+    void ModelFinished(QAbstractItemModel* model, const ViewAbstract::ViewType& viewType);
 
     void MainViewClosed(QCloseEvent* event);
 
 signals:
 
-    void RequestModel(const ViewType& viewType);
+    void RequestModel(const ViewAbstract::ViewType& viewType);
 
 protected:
 
     //Views
     MainView* mainView;
-    QMap<ViewType,ViewAbstract*> views;
+    QMap<ViewAbstract::ViewType,ViewAbstract*> views;
     //Models
-    QMap<ViewType,QAbstractItemModel*> models;
+    QMap<ViewAbstract::ViewType,QAbstractItemModel*> models;
     //Logger
     Logger* logger;
     //Adapters
@@ -49,8 +50,8 @@ protected:
     QDomDocument* locale;
 
     //getters
-    ViewAbstract*& getSubView(const ViewType& viewType);
-    QAbstractItemModel*& getViewModel(const ViewType& viewType);
+    ViewAbstract*& getSubView(const ViewAbstract::ViewType& viewType);
+    QAbstractItemModel*& getViewModel(const ViewAbstract::ViewType& viewType);
 
 };
 

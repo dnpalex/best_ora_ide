@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainPresenter_t {
     QByteArrayData data[5];
-    char stringdata0[46];
+    char stringdata0[60];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,12 +34,12 @@ static const qt_meta_stringdata_MainPresenter_t qt_meta_stringdata_MainPresenter
 QT_MOC_LITERAL(0, 0, 13), // "MainPresenter"
 QT_MOC_LITERAL(1, 14, 12), // "RequestModel"
 QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 8), // "ViewType"
-QT_MOC_LITERAL(4, 37, 8) // "viewType"
+QT_MOC_LITERAL(3, 28, 22), // "ViewAbstract::ViewType"
+QT_MOC_LITERAL(4, 51, 8) // "viewType"
 
     },
-    "MainPresenter\0RequestModel\0\0ViewType\0"
-    "viewType"
+    "MainPresenter\0RequestModel\0\0"
+    "ViewAbstract::ViewType\0viewType"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,25 +71,14 @@ void MainPresenter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         MainPresenter *_t = static_cast<MainPresenter *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->RequestModel((*reinterpret_cast< const ViewType(*)>(_a[1]))); break;
+        case 0: _t->RequestModel((*reinterpret_cast< const ViewAbstract::ViewType(*)>(_a[1]))); break;
         default: ;
-        }
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        switch (_id) {
-        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 0:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ViewType >(); break;
-            }
-            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (MainPresenter::*_t)(const ViewType & );
+            typedef void (MainPresenter::*_t)(const ViewAbstract::ViewType & );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainPresenter::RequestModel)) {
                 *result = 0;
                 return;
@@ -130,14 +119,14 @@ int MainPresenter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 1)
-            qt_static_metacall(this, _c, _id, _a);
+            *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 1;
     }
     return _id;
 }
 
 // SIGNAL 0
-void MainPresenter::RequestModel(const ViewType & _t1)
+void MainPresenter::RequestModel(const ViewAbstract::ViewType & _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
