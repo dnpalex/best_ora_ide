@@ -5,6 +5,8 @@
 #include <QScopedPointer>
 #include <QAbstractItemModel>
 
+#include <QDebug>
+
 #include "source/Views/viewabstract.h"
 
 namespace Ui {
@@ -25,6 +27,8 @@ protected:
 
     void AddConnection();
     void RemoveConnection();
+
+    QToolBar* toolBar;
 
 private:
     Ui::ConnectionListView *ui;

@@ -3,7 +3,7 @@
 namespace QtXML{
 QVariant CreateAttributeValue(const QDomAttr& attr){
     QVariant val;
-    if(attr.name()=="ico"){
+    if(attr.name()=="icon"){
         val = QIcon(attr.value());
     }else{
         val = attr.value();
@@ -19,6 +19,19 @@ QDomElement ElementByNameNTag(const QDomElement& root, const QString& tag, const
         }
     }
     return root;
+}
+
+QString GetElementName(const QDomElement &elem)
+{
+    QString nme;
+    QDomNamedNodeMap map = elem.attributes();
+    for (int i =0; i < map.count(); i++) {
+        if(map.item(i).toAttr().name() == "name"){
+            nme = map.item(i).toAttr().value();
+            break;
+        }
+    }
+    return nme;
 }
 
 }

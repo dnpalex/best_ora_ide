@@ -7,7 +7,11 @@
 #include <QMetaEnum>
 #include <QMetaObject>
 
+#include <QDebug>
+#include <QToolBar>
+
 #include "source/Misc/settingsuser.h"
+#include "source/Misc/qtxml.h"
 
 
 class ViewAbstract : public QWidget
@@ -30,6 +34,8 @@ public:
     virtual void setModel(QAbstractItemModel* model) = 0;
 
 protected:
+
+    void ApplyForElement(const QDomElement& elem, QObject *obj);
 
     ViewType viewType;
 };

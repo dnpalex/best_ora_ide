@@ -29,8 +29,10 @@ QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter
     case FileType::XML:{
         QDomDocument* doc = Q_NULLPTR;
         doc = ReadXmlFile(AcquireDir(tr("Config")).dirName().append(QDir::separator()).append(fileName));
-        model = new QStandardItemModel(this);
-        RecursiveRead(doc->documentElement(), *model->invisibleRootItem());
+        if(doc!=Q_NULLPTR){
+            model = new QStandardItemModel(this);
+            RecursiveRead(doc->documentElement(), *model->invisibleRootItem());
+        }
         break;
     }
     case FileType::JSON:
@@ -45,7 +47,7 @@ QStandardItemModel *IOAdapter::ReadFile(const QString &fileName, const IOAdapter
 QDomDocument *IOAdapter::ReadGlobSettings(bool refresh)
 {
     if(refresh){
-        ReadXmlFile(AcquireDir(tr("Config")).dirName().append(QDir::separator()).append(configValue(tr("Config"),tr("globFileName")).toString()),
+        ReadXmlFile(configValue(tr("Config"),tr("globFileName")).toString(),//AcquireDir(tr("Config")).dirName().append(QDir::separator()).append(),
                     &globalSettings);
     }
     return &globalSettings;
@@ -68,7 +70,7 @@ void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem
             attr = attrList.item(i).toAttr();
             userData.insert(attr.name(),QtXML::CreateAttributeValue(attr));
         }
-        item = new QStandardItem(userData.value("ico").value<QIcon>(),userData.value("name").toString());
+        item = new QStandardItem(userData.value(tr("icon")).value<QIcon>(),userData.value("name").toString());
         item->setData(userData);
         parItem.appendRow(item);
         if(!child.firstChildElement().isNull()){
@@ -108,7 +110,8 @@ QDomDocument* IOAdapter::ReadXmlFile(const QString &fileName, QDomDocument *doc)
 QDir IOAdapter::AcquireDir(const QString &configGroup)
 {
     QDir dir(configValue(configGroup,tr("folder")).toString());
-    if(!dir.exists()) dir.mkpath(dir.absolutePath());
+    if(!dir.exists())
+        dir.mkpath(dir.absolutePath());
     return dir;
 }
 

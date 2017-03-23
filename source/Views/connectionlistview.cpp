@@ -9,7 +9,7 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
     setViewType(vt);
 
     //Setup toolbar
-    QToolBar* toolBar = new QToolBar(this);
+    toolBar = new QToolBar(this);
     QAction* act = new QAction(toolBar); //QIcon(tr(":/db_add")),"",toolBar
     act->setObjectName(tr("addConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
@@ -38,7 +38,6 @@ void ConnectionListView::setModel(QAbstractItemModel *model)
 
 void ConnectionListView::AddConnection()
 {
-
 }
 
 void ConnectionListView::RemoveConnection()

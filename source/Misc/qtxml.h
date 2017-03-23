@@ -7,6 +7,8 @@
 
 namespace QtXML{
 
+QString GetElementName(const QDomElement& elem);
+
 QVariant CreateAttributeValue(const QDomAttr& attr);
 
 QDomElement ElementByNameNTag(const QDomElement& root, const QString& tag, const QString& name);

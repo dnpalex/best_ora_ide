@@ -4,8 +4,8 @@
 	</viewclass>
 	<viewclass name="ConnectionList" windowTitle="Connections">
 		<widget name="toolBar">
-			<widget name="addConnection" ico=":/db_add"/>
-			<widget name="removeConnection" ico=":/db_remo"/>
+			<widget name="addConnection" icon=":/db_add"/>
+			<widget name="removeConnection" icon=":/db_remo"/>
 		</widget>
 	</viewclass>
 	<viewclass name="ConnectionProp" windowTitle="Create connection">
