@@ -7,11 +7,14 @@
 
 namespace QtXML{
 
-QString GetElementName(const QDomElement& elem);
+void ApplyPropertyTree(const QDomElement &root, QObject* obj);
+void ApplyPropertyObject(const QDomElement &elem, QObject *obj);
 
 QVariant CreateAttributeValue(const QDomAttr& attr);
 
 QDomElement ElementByNameNTag(const QDomElement& root, const QString& tag, const QString& name);
+
+QString GetElementName(const QDomElement& elem);
 
 }
 

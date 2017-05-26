@@ -28,14 +28,10 @@ public:
     ViewAbstract::ViewType getViewType() const;
     QString getViewTypeStr() const;
 
-    void ApplySettings(const QDomElement& root);
-
     void setViewType(const ViewAbstract::ViewType &vt);
     virtual void setModel(QAbstractItemModel* model) = 0;
 
 protected:
-
-    void ApplyForElement(const QDomElement& elem, QObject *obj);
 
     ViewType viewType;
 };

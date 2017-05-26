@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     source/Models/ioadapter.cpp \
     source/Views/connectionpropview.cpp \
     source/Models/adapterabstract.cpp \
-    source/Misc/qtxml.cpp
+    source/Misc/qtxml.cpp \
+    source/Misc/qtdebug.cpp
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -50,7 +51,8 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Models/ioadapter.h \
     source/Views/connectionpropview.h \
     source/Models/adapterabstract.h \
-    source/Misc/qtxml.h
+    source/Misc/qtxml.h \
+    source/Misc/qtdebug.h
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui \

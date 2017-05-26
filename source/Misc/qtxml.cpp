@@ -34,4 +34,31 @@ QString GetElementName(const QDomElement &elem)
     return nme;
 }
 
+void ApplyPropertyObject(const QDomElement &elem, QObject *obj)
+{
+    if(obj != Q_NULLPTR){
+        QDomNamedNodeMap attrList = elem.attributes();
+        QDomAttr attr;
+        for(int i = 0; i < attrList.count(); i++){
+            attr = attrList.item(i).toAttr();
+            obj->setProperty(attr.name().toStdString().c_str(),CreateAttributeValue(attr));
+        }
+    }
+}
+
+void ApplyPropertyTree(const QDomElement &root, QObject* obj)
+{
+    ApplyPropertyObject(root,obj);
+    QDomNodeList list = root.childNodes();
+    for(int i = 0; i < list.count(); i++){
+        if(list.item(i).isElement()){
+            QString nme = QtXML::GetElementName(list.item(i).toElement());
+            ApplyPropertyTree(list.item(i).toElement(), obj->findChild<QObject*>(nme,Qt::FindChildrenRecursively));
+        }
+        else{
+            continue;
+        }
+    }
+}
+
 }

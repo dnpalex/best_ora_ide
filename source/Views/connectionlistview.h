@@ -5,8 +5,11 @@
 #include <QScopedPointer>
 #include <QAbstractItemModel>
 
+#ifdef QT_DEBUG
 #include <QDebug>
+#endif
 
+#include "source/Misc/qtdebug.h"
 #include "source/Views/viewabstract.h"
 
 namespace Ui {

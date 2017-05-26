@@ -85,7 +85,8 @@ ViewAbstract *&MainPresenter::getSubView(const ViewAbstract::ViewType& viewType)
         case ViewAbstract::Default:
             break;
         }
-        views[viewType]->ApplySettings(QtXML::ElementByNameNTag(locale->documentElement(),tr("viewclass"),views[viewType]->getViewTypeStr()));
+        QtXML::ApplyPropertyTree(QtXML::ElementByNameNTag(locale->documentElement(),tr("viewclass"),views[viewType]->getViewTypeStr()),views[viewType]);
+        //views[viewType]->ApplySettings(QtXML::ElementByNameNTag(locale->documentElement(),tr("viewclass"),views[viewType]->getViewTypeStr()));
     }
     return views[viewType];
 }

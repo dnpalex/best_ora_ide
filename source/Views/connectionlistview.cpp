@@ -10,6 +10,7 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
 
     //Setup toolbar
     toolBar = new QToolBar(this);
+    toolBar->setObjectName(tr("toolBar"));
     QAction* act = new QAction(toolBar); //QIcon(tr(":/db_add")),"",toolBar
     act->setObjectName(tr("addConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
@@ -21,6 +22,7 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
     toolBar->addAction(act);
 
     ui->layToolBar->addWidget(toolBar);
+
     //end toolbar
 
     setModel(model);
