@@ -9,8 +9,8 @@
 #include <QDebug>
 #endif
 
-#include "source/Misc/qtdebug.h"
-#include "source/Views/viewabstract.h"
+#include "Misc/qtdebug.h"
+#include "Views/viewabstract.h"
 
 namespace Ui {
 class ConnectionListView;

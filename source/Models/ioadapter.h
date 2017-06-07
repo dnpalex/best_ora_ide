@@ -8,9 +8,9 @@
 #include <QDir>
 #include <QThread>
 
-#include "source/Misc/logableobject.h"
-#include "source/Misc/qtxml.h"
-#include "source/Models/adapterabstract.h"
+#include "Misc/logableobject.h"
+#include "Misc/qtxml.h"
+#include "Models/adapterabstract.h"
 
 
 class IOAdapter : public QThread, public LogableObject, public AdapterAbstract, public SettingsUser

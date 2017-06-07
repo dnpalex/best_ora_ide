@@ -8,12 +8,12 @@
 #include <QApplication>
 #include <QCloseEvent>
 
-#include "source/Views/mainview.h"
-#include "source/Views/connectionlistview.h"
-#include "source/Models/ioadapter.h"
-#include "source/Misc/logger.h"
-#include "source/Views/connectionpropview.h"
-#include "source/Misc/qtxml.h"
+#include "Views/mainview.h"
+#include "Views/connectionlistview.h"
+#include "Models/ioadapter.h"
+#include "Misc/logger.h"
+#include "Views/connectionpropview.h"
+#include "Misc/qtxml.h"
 
 
 class MainPresenter : public QApplication, public SettingsUser

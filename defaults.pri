@@ -1,0 +1,2 @@
+INCLUDEPATH += $$PWD/source
+SRC_DIR = $$PWD

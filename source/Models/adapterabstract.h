@@ -3,7 +3,7 @@
 
 #include <QAbstractItemModel>
 
-#include "source/Views/viewabstract.h"
+#include "Views/viewabstract.h"
 
 class AdapterAbstract
 {

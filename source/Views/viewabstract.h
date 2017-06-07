@@ -10,8 +10,8 @@
 #include <QDebug>
 #include <QToolBar>
 
-#include "source/Misc/settingsuser.h"
-#include "source/Misc/qtxml.h"
+#include "Misc/settingsuser.h"
+#include "Misc/qtxml.h"
 
 
 class ViewAbstract : public QWidget

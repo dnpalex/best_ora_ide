@@ -2,8 +2,8 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-#include <source/Presenters/mainpresenter.h>
-#include <source/Misc/logger.h>
+#include <Presenters/mainpresenter.h>
+#include <Misc/logger.h>
 
 int main(int argc, char *argv[])
 {

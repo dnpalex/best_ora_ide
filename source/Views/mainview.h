@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QDockWidget>
-#include "source/Views/viewabstract.h"
+#include "Views/viewabstract.h"
 
 namespace Ui {
 class MainView;

@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QDir>
 
-#include "source/Misc/settingsuser.h"
+#include "Misc/settingsuser.h"
 
 class Logger : public QObject, public SettingsUser
 {
