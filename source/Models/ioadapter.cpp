@@ -68,7 +68,7 @@ void IOAdapter::RecursiveRead(const QDomElement &parElem, QStandardItem& parItem
         QDomAttr attr;
         for(int i = 0; i < attrList.count(); i++){
             attr = attrList.item(i).toAttr();
-            userData.insert(attr.name(),QtXML::CreateAttributeValue(attr));
+            userData.insert(attr.name(),QtXML::AttributeToValue(attr));
         }
         item = new QStandardItem(userData.value(tr("icon")).value<QIcon>(),userData.value("name").toString());
         item->setData(userData);

@@ -11,18 +11,21 @@ ConnectionListView::ConnectionListView(ViewType vt, QAbstractItemModel *model, Q
     //Setup toolbar
     toolBar = new QToolBar(this);
     toolBar->setObjectName(tr("toolBar"));
-    QAction* act = new QAction(toolBar); //QIcon(tr(":/db_add")),"",toolBar
+    QAction* act = new QAction(toolBar);
     act->setObjectName(tr("addConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::AddConnection);
     toolBar->addAction(act);
 
-    act = new QAction(toolBar); //QIcon(tr(":/db_remo")),"",toolBar
+    act = new QAction(toolBar);
     act->setObjectName(tr("removeConnection"));
     connect(act, &QAction::triggered, this, &ConnectionListView::RemoveConnection);
     toolBar->addAction(act);
 
     ui->layToolBar->addWidget(toolBar);
 
+#ifdef QT_DEBUG
+    //QtDebug::PrintObjectTree(this,"-");
+#endif
     //end toolbar
 
     setModel(model);

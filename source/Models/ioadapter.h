@@ -12,6 +12,7 @@
 #include "source/Misc/qtxml.h"
 #include "source/Models/adapterabstract.h"
 
+
 class IOAdapter : public QThread, public LogableObject, public AdapterAbstract, public SettingsUser
 {
     Q_OBJECT

@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     source/Views/connectionpropview.cpp \
     source/Models/adapterabstract.cpp \
     source/Misc/qtxml.cpp \
-    source/Misc/qtdebug.cpp
+    source/Misc/qtdebug.cpp \
 
 HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/mainview.h \
@@ -52,7 +52,7 @@ HEADERS  += source/Presenters/mainpresenter.h \
     source/Views/connectionpropview.h \
     source/Models/adapterabstract.h \
     source/Misc/qtxml.h \
-    source/Misc/qtdebug.h
+    source/Misc/qtdebug.h \
 
 FORMS    += source/Views/mainview.ui \
     source/Views/connectionlistview.ui \
@@ -60,3 +60,4 @@ FORMS    += source/Views/mainview.ui \
 
 STATECHARTS +=
 
+INCLUDEPATH += source

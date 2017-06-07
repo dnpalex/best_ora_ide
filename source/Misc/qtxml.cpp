@@ -1,7 +1,35 @@
 #include "source/Misc/qtxml.h"
 
 namespace QtXML{
-QVariant CreateAttributeValue(const QDomAttr& attr){
+
+void ApplyPropertyObject(const QDomElement &elem, QObject *obj)
+{
+    if(obj != Q_NULLPTR){
+        QDomNamedNodeMap attrList = elem.attributes();
+        QDomAttr attr;
+        for(int i = 0; i < attrList.count(); i++){
+            attr = attrList.item(i).toAttr();
+            obj->setProperty(attr.name().toStdString().c_str(),AttributeToValue(attr));
+        }
+    }
+}
+
+void ApplyPropertyTree(const QDomElement &root, QObject* obj)
+{
+    ApplyPropertyObject(root,obj);
+    QDomNodeList list = root.childNodes();
+    for(int i = 0; i < list.count(); i++){
+        if(list.item(i).isElement()){
+            QString nme = QtXML::GetElementName(list.item(i).toElement());
+            ApplyPropertyTree(list.item(i).toElement(), obj->findChild<QObject*>(nme,Qt::FindChildrenRecursively));
+        }
+        else{
+            continue;
+        }
+    }
+}
+
+QVariant AttributeToValue(const QDomAttr& attr){
     QVariant val;
     if(attr.name()=="icon"){
         val = QIcon(attr.value());
@@ -34,31 +62,50 @@ QString GetElementName(const QDomElement &elem)
     return nme;
 }
 
-void ApplyPropertyObject(const QDomElement &elem, QObject *obj)
+QString ValueToAttribute(QVariant val)
+{
+    QString attr;
+    if(QString(val.typeName()).contains("icon",Qt::CaseInsensitive)){
+        attr = val.value<QIcon>().name();
+    }else{
+        attr = val.toString();
+    }
+    return attr;
+}
+
+QDomDocument *PropertyTreeToDocument(const QObject *root, const QString& name)
+{
+    QDomDocument* doc = new QDomDocument(name);
+    QDomElement treeRoot = doc->createElement("tree");
+    doc->appendChild(treeRoot);
+    //ObjectToXml(root, treeRoot, doc);
+    return doc;
+}
+
+QDomDocument *ModelToDocument(const QStandardItemModel *model, const QString& name)
+{
+    QDomDocument* doc = new QDomDocument(name);
+    if(model != Q_NULLPTR && model->invisibleRootItem()->hasChildren()){
+        QDomElement root = doc->createElement("tree");
+        doc->appendChild(root);
+    }
+    return doc;
+}
+
+void ObjectToXml(const QObject* obj, QDomElement& header)
 {
     if(obj != Q_NULLPTR){
-        QDomNamedNodeMap attrList = elem.attributes();
-        QDomAttr attr;
-        for(int i = 0; i < attrList.count(); i++){
-            attr = attrList.item(i).toAttr();
-            obj->setProperty(attr.name().toStdString().c_str(),CreateAttributeValue(attr));
+        QDomElement el = header.ownerDocument().createElement(obj->metaObject()->className());
+        QList<const char*> propList = {"name", "height", "width","x","y","maximized","fullScreen"};
+        foreach (auto c, propList) {
+            el.setAttribute(c,ValueToAttribute(obj->property(c)));
+        }
+        header.appendChild(el);
+        foreach (auto child, obj->children()) {
+            ObjectToXml(child, el);
         }
     }
 }
 
-void ApplyPropertyTree(const QDomElement &root, QObject* obj)
-{
-    ApplyPropertyObject(root,obj);
-    QDomNodeList list = root.childNodes();
-    for(int i = 0; i < list.count(); i++){
-        if(list.item(i).isElement()){
-            QString nme = QtXML::GetElementName(list.item(i).toElement());
-            ApplyPropertyTree(list.item(i).toElement(), obj->findChild<QObject*>(nme,Qt::FindChildrenRecursively));
-        }
-        else{
-            continue;
-        }
-    }
-}
 
 }

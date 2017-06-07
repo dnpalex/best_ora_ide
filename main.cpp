@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         return mainPres.exec();
     } catch (QString mes) {
         qDebug() << mes;
+        return 1;
     }
     return 0;
 }
