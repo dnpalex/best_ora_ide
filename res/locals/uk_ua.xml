@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tree>
+	<viewclass name="MainView" windowTitle="ORA Integrated Development Environment">
+	</viewclass>
+	<viewclass name="ConnectionList" windowTitle="Connections">
+		<widget name="toolBar">
+			<widget name="addConnection" icon=":/db_add"/>
+			<widget name="removeConnection" icon=":/db_remo"/>
+		</widget>
+	</viewclass>
+	<viewclass name="ConnectionProp" windowTitle="Create connection">
+		<widget name="label1" text="Name" />
+		<widget name="label2" text="User" />
+		<widget name="label3" text="Password" />
+		<widget name="checkBox" text="Save Password" />
+	</viewclass>
+</tree>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/" lang="uk_UA">
+        <file alias="global_locale">uk_ua.xml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file alias="global_locale">uk_ua.xml</file>
+    </qresource>
+</RCC>

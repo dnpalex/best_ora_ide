@@ -77,3 +77,14 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#QT build files
+*.Debug
+*.Release
+*.h.*
+*.rcc
+debug
+release
+
+#Log files
+Log
